@@ -1,0 +1,22 @@
+[
+  {
+    "type": "BUR",
+    "uid": "1",
+    "quantity": 3
+  },
+  {
+    "type": "PIZ",
+    "uid": "4",
+    "quantity": 2
+  },
+  {
+    "type": "BEV",
+    "uid": "2",
+    "quantity": 4
+  },
+  {
+    "type": "BUR",
+    "uid": "4",
+    "quantity": 1
+  }
+]
