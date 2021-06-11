@@ -9,7 +9,9 @@ const Localstyle = StyleSheet.create({
 // Helper Component
 import {Button, IconButton} from '../components/Button';
 import {Black, Yellow} from '../Style/color';
-
+// Request
+import {MenuReq} from '../data/Request';
+import Notify from '../components/Toast';
 class Welcome extends Component {
   constructor(navigation) {
     super(navigation);
@@ -18,6 +20,8 @@ class Welcome extends Component {
       navigation: navigation,
     };
     this.GetToken();
+    this.GetMenu();
+    this.GetCart();
   }
   async GetToken() {
     try {
@@ -29,6 +33,39 @@ class Welcome extends Component {
       }
     } catch (err) {
       Notify('Unable to connect to server');
+      throw err;
+    }
+  }
+  async GetMenu() {
+    try {
+      const menu = await AsyncStorage.getItem('menu');
+      if (menu === null) {
+        let fetch_var = MenuReq({});
+        fetch_var
+          .then(async data => {
+            if (data.success === true) {
+              await AsyncStorage.setItem('menu', JSON.stringify(data.menu));
+              Notify('Menu Updated');
+            } else {
+              Notify(data.msg);
+            }
+          })
+          .catch(err => {
+            throw err;
+          });
+      }
+    } catch (err) {
+      Notify('Unable to connect to server');
+      throw err;
+    }
+  }
+  async GetCart() {
+    try {
+      const cart = await AsyncStorage.getItem('cart');
+      if (cart === null) {
+        await AsyncStorage.setItem('cart', JSON.stringify([]));
+      }
+    } catch (err) {
       throw err;
     }
   }

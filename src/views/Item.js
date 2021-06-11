@@ -14,7 +14,7 @@ import {Button, IconButton} from '../components/Button';
 import {BURGER, PIZZA, BEVERAGE} from '../data/Image';
 // Style
 import style from '../Style/style';
-import {Black, Green, Red, White, Yellow} from '../Style/color';
+import {Black, White, Yellow} from '../Style/color';
 const Localstyle = StyleSheet.create({
   SubContainer: {
     flex: 1,
@@ -43,25 +43,42 @@ const Localstyle = StyleSheet.create({
   },
 });
 // Request
-import {AddCartReq} from '../data/Request';
+import {PostCartReq} from '../data/Request';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 class Item extends Component {
-  constructor() {
-    super();
+  constructor(props) {
+    super(props);
     this.state = {
+      isCart: false,
+      ele_id: -1,
       quantity: 1,
     };
+    this.SetQty();
   }
-  onInc = () => {
-    this.setState({
-      quantity: this.state.quantity + 1,
-    });
+  SetQty = async () => {
+    var cart = await AsyncStorage.getItem('cart');
+    cart = JSON.parse(cart);
+    for (var i = 0; i < cart.length; i++) {
+      if (
+        cart[i].type === this.props.route.params.type &&
+        cart[i].uid === this.props.route.params.uid
+      ) {
+        this.setState({
+          isCart: true,
+          ele_id: i,
+          quantity: cart[i].qty,
+        });
+        break;
+      }
+    }
   };
-  onDec = () => {
-    if (this.state.quantity > 1) {
-      this.setState({
-        quantity: this.state.quantity - 1,
-      });
+  IncQty = () => {
+    this.setState({quantity: this.state.quantity + 1});
+  };
+  DecQty = () => {
+    if (this.state.quantity > 0) {
+      this.setState({quantity: this.state.quantity - 1});
     }
   };
   render() {
@@ -121,30 +138,46 @@ class Item extends Component {
               style={[style.Text, style.TextWhite, style.Desc, Localstyle.Gen]}>
               Quantity:{'\t'}
             </Text>
-            <IconButton
-              props={{
-                name: 'remove',
-                size: 15,
-                color: White,
-                bgcolor: Red,
-                onPress: this.onDec,
-              }}
-              style={[style.Center, Localstyle.Gen]}
-            />
-            <Text
-              style={[style.Text, style.TextWhite, style.Desc, Localstyle.Gen]}>
-              {this.state.quantity}
-            </Text>
-            <IconButton
-              props={{
-                name: 'add',
-                size: 15,
-                color: White,
-                bgcolor: Green,
-                onPress: this.onInc,
-              }}
-              style={[style.Center, Localstyle.Gen]}
-            />
+            <View
+              style={[
+                {
+                  backgroundColor: Yellow,
+                  borderRadius: 50,
+                  width: 95,
+                },
+                style.Inline,
+              ]}>
+              <IconButton
+                props={{
+                  name: 'remove',
+                  size: 15,
+                  color: Black,
+                  onPress: () => {
+                    this.DecQty();
+                  },
+                }}
+                style={[style.Left]}
+              />
+              <Text
+                style={[
+                  style.Text,
+                  style.Center,
+                  {flex: 1, color: Black, textAlign: 'center'},
+                ]}>
+                {this.state.quantity}
+              </Text>
+              <IconButton
+                props={{
+                  name: 'add',
+                  size: 15,
+                  color: Black,
+                  onPress: () => {
+                    this.IncQty();
+                  },
+                }}
+                style={style.Right}
+              />
+            </View>
           </View>
           <View style={style.screenBottom}>
             <Button
@@ -159,9 +192,18 @@ class Item extends Component {
                     uid: props.uid,
                     qty: this.state.quantity,
                   };
-                  const fetch_var = AddCartReq(body);
+                  var cart = await AsyncStorage.getItem('cart');
+                  cart = JSON.parse(cart);
+                  if (this.state.isCart == true) {
+                    cart[this.state.ele_id].qty = this.state.quantity;
+                  } else {
+                    cart.push(body);
+                  }
+                  cart = JSON.stringify(cart);
+                  const fetch_var = PostCartReq({cart});
                   fetch_var
-                    .then(data => {
+                    .then(async data => {
+                      await AsyncStorage.setItem('cart', cart);
                       Notify(data.msg);
                       if (data.success === true) {
                         this.props.navigation.navigate('Home');

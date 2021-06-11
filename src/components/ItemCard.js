@@ -10,7 +10,7 @@ import {Black, White, Yellow} from '../Style/color';
 const Localstyle = StyleSheet.create({
   Container: {
     width: 220,
-    margin: 5,
+    margin: 2,
     padding: 0,
   },
   SubContainer: {

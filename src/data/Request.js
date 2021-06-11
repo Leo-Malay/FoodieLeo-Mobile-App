@@ -1,5 +1,6 @@
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
+// Auth
 async function LoginReq(body) {
   return fetch(
     'https://leo-api-center.herokuapp.com/Auth/login',
@@ -34,22 +35,12 @@ async function ChAccountReq(body) {
     throw err;
   }
 }
-async function AddCartReq(body) {
+// Cart
+async function PostCartReq(body) {
   try {
     let token = await AsyncStorage.getItem('token');
     return fetch(
-      'https://leo-api-center.herokuapp.com/FoodieLeo/add_cart',
-      post_Req_Option_Token(body, token),
-    ).then(response => response.json());
-  } catch (err) {
-    throw err;
-  }
-}
-async function RmCartReq(body) {
-  try {
-    let token = await AsyncStorage.getItem('token');
-    return fetch(
-      'https://leo-api-center.herokuapp.com/FoodieLeo/rm_cart',
+      'https://leo-api-center.herokuapp.com/FoodieLeo/cart',
       post_Req_Option_Token(body, token),
     ).then(response => response.json());
   } catch (err) {
@@ -62,6 +53,28 @@ async function GetCartReq() {
     return fetch(
       'https://leo-api-center.herokuapp.com/FoodieLeo/cart',
       get_Req_Option_Token({}, token),
+    ).then(response => response.json());
+  } catch (err) {
+    throw err;
+  }
+}
+async function OrderReq(body) {
+  try {
+    let token = await AsyncStorage.getItem('token');
+    return fetch(
+      'https://leo-api-center.herokuapp.com/FoodieLeo/rm_cart',
+      post_Req_Option_Token(body, token),
+    ).then(response => response.json());
+  } catch (err) {
+    throw err;
+  }
+}
+// Menu
+async function MenuReq() {
+  try {
+    return fetch(
+      'https://leo-api-center.herokuapp.com/FoodieLeo/menu',
+      get_Req_Option({}),
     ).then(response => response.json());
   } catch (err) {
     throw err;
@@ -120,9 +133,10 @@ function get_Req_Option_Token(body, token) {
 export {
   LoginReq,
   NewAccountReq,
-  AddCartReq,
-  RmCartReq,
-  GetCartReq,
   GetAccountReq,
   ChAccountReq,
+  PostCartReq,
+  GetCartReq,
+  OrderReq,
+  MenuReq,
 };

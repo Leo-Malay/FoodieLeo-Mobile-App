@@ -13,7 +13,7 @@ const Localstyle = StyleSheet.create({
   },
 });
 // Request.
-import {LoginReq} from '../data/Request';
+import {LoginReq, GetCartReq} from '../data/Request';
 
 class Login extends Component {
   constructor(navigation) {
@@ -24,6 +24,15 @@ class Login extends Component {
       Password: '',
     };
   }
+  GetCredentials = async () => {
+    try {
+      let User = await AsyncStorage.getItem('Username');
+      let Pass = await AsyncStorage.getItem('Password');
+      this.setState({Username: User, Password: Pass});
+    } catch (err) {
+      throw err;
+    }
+  };
   render() {
     return (
       <View style={[style.Container, style.Center]}>
@@ -46,12 +55,14 @@ class Login extends Component {
           <TextInput
             placeholder="Username"
             style={style.TextInput}
+            value={this.state.Username}
             onChangeText={text => this.setState({Username: text})}
             autoCompleteType="username"
           />
           <TextInput
             placeholder="Password"
             style={style.TextInput}
+            value={this.state.Password}
             secureTextEntry={true}
             onChangeText={text => this.setState({Password: text})}
             autoCompleteType="password"
@@ -73,7 +84,20 @@ class Login extends Component {
                     if (data.success == true) {
                       try {
                         await AsyncStorage.setItem('token', data.token);
-                        this.state.navigation.navigation.navigate('Drawer');
+                        const fetch_var1 = GetCartReq(body);
+                        fetch_var1
+                          .then(async data => {
+                            if (data.success == true) {
+                              await AsyncStorage.setItem('cart', data.cart);
+                              this.state.navigation.navigation.navigate(
+                                'Drawer',
+                              );
+                            }
+                          })
+                          .catch(err => {
+                            Notify('Unable to fetch your cart');
+                            throw err;
+                          });
                       } catch (err) {
                         Notify('Unable to connect to server');
                         throw err;

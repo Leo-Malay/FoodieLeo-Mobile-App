@@ -1,9 +1,9 @@
-import React from 'react';
-import {StyleSheet, Text, TouchableOpacity} from 'react-native';
+import React, {Component} from 'react';
+import {StyleSheet, View, Text, TouchableOpacity} from 'react-native';
 import Icons from 'react-native-vector-icons/MaterialIcons';
 // Style
 import style from '../Style/style';
-import {Blue, White} from '../Style/color';
+import {Black, Blue, White} from '../Style/color';
 const Localstyle = StyleSheet.create({
   Container: {
     padding: 3,
@@ -54,6 +54,7 @@ const IconButton = ({props}) => {
     </TouchableOpacity>
   );
 };
+
 export {Button, IconButton};
 /**
  * Usage

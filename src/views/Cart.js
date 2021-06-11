@@ -1,46 +1,31 @@
 import React, {Component} from 'react';
-import {StyleSheet, View, Text, ScrollView} from 'react-native';
+import {View, Text, ScrollView} from 'react-native';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 // Helper Component
 import {ScreenHeader} from '../components/Header';
-import {Button, IconButton} from '../components/Button';
+import {IconButton, Button} from '../components/Button';
 import CartItem from '../components/CartItem';
-import MenuData from '../data/Menu.json';
+import Menu from '../data/Menu';
 // Style
 import style from '../Style/style';
 import {Black, Yellow} from '../Style/color';
 // Request
-import {RmCartReq, GetCartReq} from '../data/Request';
+import {GetCartReq, OrderReq, PostCartReq} from '../data/Request';
 import Notify from '../components/Toast';
 
 class Cart extends Component {
-  constructor() {
-    super();
-    this.state = {
-      Cart: [],
-      cartEmpty: false,
-    };
-    this.GetCart();
+  constructor(navigation) {
+    super(navigation);
+    this.state = {cart: [], MenuData: [], navigation};
+    this.GetData();
   }
-  GetCart = () => {
-    let fetch_var = GetCartReq();
-    fetch_var
-      .then(data => {
-        if (data.success === true) {
-          if (data.cart.length === 0) {
-            this.setState({cartEmpty: true});
-          } else {
-            this.setState({Cart: data.cart});
-          }
-        } else {
-          Notify('Unable to fetch the cart data');
-        }
-      })
-      .catch(err => {
-        throw err;
-      });
+  GetData = async () => {
+    const cart = JSON.parse(await AsyncStorage.getItem('cart'));
+    const MenuData = await Menu();
+    this.setState({cart: cart, MenuData: MenuData});
   };
-  ShowCart = () => {
-    if (this.state.cartEmpty === true) {
+  ShowData = () => {
+    if (this.state.cart.length == 0) {
       return (
         <View style={{alignItems: 'center'}}>
           <IconButton
@@ -62,72 +47,70 @@ class Cart extends Component {
           </Text>
         </View>
       );
-    } else if (this.state.Cart.length > 0) {
-      return this.state.Cart.map(ele => {
-        for (var i = 0; i < MenuData.length; i++) {
-          if (MenuData[i].type === ele.type) {
-            for (var j = i; j < MenuData.length; j++) {
-              if (MenuData[j].uid === ele.uid) {
-                var prop = MenuData[j];
-                var key = ele.type + ele.uid;
-                return (
-                  <CartItem
-                    key={key}
-                    props={{
-                      type: ele.type,
-                      uid: ele.uid,
-                      name: prop.name,
-                      cost: prop.cost,
-                      quantity: ele.qty,
-                      veg: prop.veg,
-                      onPress: () => {
-                        let fetch_var = RmCartReq({
-                          type: ele.type,
-                          uid: ele.uid,
-                        });
-                        fetch_var
-                          .then(data => {
-                            if (data.success === true) {
-                              Notify(data.msg);
-                              this.GetCart();
-                            }
-                          })
-                          .catch(err => {
-                            throw err;
-                          });
-                      },
-                    }}
-                  />
-                );
-              }
-            }
-          }
-        }
-      });
     } else {
       return (
-        <Text
-          style={[
-            style.Center,
-            style.Text,
-            style.Subtitle,
-            {paddingVertical: 10},
-          ]}>
-          Fetching cart...
-        </Text>
+        <View>
+          {this.state.cart.map((ele, z) => {
+            for (var i = 0; i < this.state.MenuData.length; i++) {
+              if (this.state.MenuData[i].type === ele.type) {
+                for (var j = i; j < this.state.MenuData.length; j++) {
+                  if (this.state.MenuData[j].uid === ele.uid) {
+                    var prop = this.state.MenuData[j];
+                    var key = ele.type + ele.uid;
+                    return (
+                      <CartItem
+                        key={key}
+                        props={{
+                          type: ele.type,
+                          uid: ele.uid,
+                          name: prop.name,
+                          cost: prop.cost,
+                          quantity: ele.qty,
+                          veg: prop.veg,
+                          onPress: async () => {
+                            var cart = await AsyncStorage.getItem('cart');
+                            cart = JSON.parse(cart);
+                            delete cart[z];
+                            cart = cart.filter((value, index, array) => {
+                              return value != undefined;
+                            });
+                            cart = JSON.stringify(cart);
+                            const fetch_var = PostCartReq({cart});
+                            fetch_var
+                              .then(async data => {
+                                await AsyncStorage.setItem('cart', cart);
+                                Notify(data.msg);
+                              })
+                              .catch(err => {
+                                throw err;
+                              });
+                          },
+                        }}
+                      />
+                    );
+                  }
+                }
+              }
+            }
+          })}
+        </View>
       );
     }
   };
-
+  componentDidMount() {
+    setInterval(() => {
+      this.GetData();
+    }, 5000);
+  }
   render() {
     return (
       <View style={style.Container}>
         <ScrollView>
           <ScreenHeader
-            navigation={this.props.navigation}
+            navigation={this.state.navigation.navigation}
             props={{name: 'Cart'}}
           />
-          {this.ShowCart()}
+          {this.ShowData()}
           <View style={style.Center}>
             <Button
               props={{

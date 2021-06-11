@@ -3,19 +3,20 @@ import {StyleSheet, View, ScrollView} from 'react-native';
 import Section from '../components/Section';
 // Helper Component
 import {HomeHeader} from '../components/Header';
+import Menu from '../data/Menu';
 // Style
 import style from '../Style/style';
 class Home extends Component {
   constructor(props) {
     super(props);
-    this.state = {};
+    this.state = {list: []};
+    this.GetMenu();
   }
+  GetMenu = async () => {
+    var menu_ls = await Menu();
+    this.setState({list: menu_ls});
+  };
   render() {
-    if (this.props.route.params !== undefined) {
-      if (this.props.route.params.Func === 'ADD') {
-        this.AddCart();
-      }
-    }
     const list = [
       ['Burger', 'BUR'],
       ['Pizza', 'PIZ'],
@@ -37,8 +38,12 @@ class Home extends Component {
             return (
               <Section
                 key={i}
+                props={{
+                  title: ele[0],
+                  type: ele[1],
+                  Menu: this.state.list,
+                }}
                 navigation={this.props.navigation}
-                props={{title: ele[0], type: ele[1]}}
               />
             );
           })}
