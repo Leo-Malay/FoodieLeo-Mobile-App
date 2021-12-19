@@ -4,7 +4,7 @@ import {View, StyleSheet} from 'react-native';
 import {Red, Green} from '../Style/color';
 const Localstyle = StyleSheet.create({
   Container: {
-    margin: 2,
+    margin: 4,
     padding: 2,
     borderWidth: 2,
     width: 15,

@@ -17,11 +17,7 @@ const Localstyle = StyleSheet.create({
 });
 const CartItem = ({props}) => {
   const GetLabel = () => {
-    if (props.veg === 1) {
-      return <Veg />;
-    } else {
-      return <NonVeg />;
-    }
+    return props.veg === 1 ? <Veg /> : <NonVeg />;
   };
   return (
     <View style={(style.Container, Localstyle.Container)}>
@@ -46,7 +42,6 @@ const CartItem = ({props}) => {
           Quantity: {props.quantity}
           {'\t\t'}
         </Text>
-
         <IconButton
           props={{
             name: 'delete',

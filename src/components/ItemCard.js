@@ -6,7 +6,7 @@ import {Veg, NonVeg} from './Label';
 import {BURGER, PIZZA, BEVERAGE} from '../data/Image';
 // Style
 import style from '../Style/style';
-import {Black, White, Yellow} from '../Style/color';
+import {Black, Yellow} from '../Style/color';
 const Localstyle = StyleSheet.create({
   Container: {
     width: 220,
@@ -33,22 +33,13 @@ const Localstyle = StyleSheet.create({
 });
 const ItemCard = ({navigation, props}) => {
   const Labeler = prop => {
-    if (prop.veg === 1) {
-      return <Veg />;
-    } else {
-      return <NonVeg />;
-    }
+    return prop.veg === 1 ? <Veg /> : <NonVeg />;
   };
   const getImg = prop => {
-    if (prop == 'BURGER') {
-      return BURGER;
-    } else if (prop == 'PIZZA') {
-      return PIZZA;
-    } else if (prop == 'BEVERAGE') {
-      return BEVERAGE;
-    } else {
-      return '';
-    }
+    if (prop == 'BURGER') return BURGER;
+    else if (prop == 'PIZZA') return PIZZA;
+    else if (prop == 'BEVERAGE') return BEVERAGE;
+    else return '';
   };
   return (
     <View style={Localstyle.Container}>

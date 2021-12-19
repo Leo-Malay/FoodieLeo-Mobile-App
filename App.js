@@ -12,6 +12,8 @@ import Welcome from './src/views/Welcome';
 import Login from './src/views/Login';
 import Logout from './src/views/Logout';
 import NewAccount from './src/views/NewAccount';
+import {Provider} from 'react-redux';
+import Store from './store';
 // Making instance.
 const Stack = createStackNavigator();
 const Drawer = createDrawerNavigator();
@@ -29,35 +31,37 @@ const Draw = () => {
 
 const App = () => {
   return (
-    <NavigationContainer>
-      <Stack.Navigator initialRouteName="Welcome">
-        <Stack.Screen
-          name="Welcome"
-          component={Welcome}
-          options={{headerShown: false}}
-        />
-        <Stack.Screen
-          name="Drawer"
-          component={Draw}
-          options={{headerShown: false}}
-        />
-        <Stack.Screen
-          name="Item"
-          component={Item}
-          options={{headerShown: false}}
-        />
-        <Stack.Screen
-          name="Login"
-          component={Login}
-          options={{headerShown: false}}
-        />
-        <Stack.Screen
-          name="NewAccount"
-          component={NewAccount}
-          options={{headerShown: false}}
-        />
-      </Stack.Navigator>
-    </NavigationContainer>
+    <Provider store={Store}>
+      <NavigationContainer>
+        <Stack.Navigator initialRouteName="Welcome">
+          <Stack.Screen
+            name="Welcome"
+            component={Welcome}
+            options={{headerShown: false}}
+          />
+          <Stack.Screen
+            name="Drawer"
+            component={Draw}
+            options={{headerShown: false}}
+          />
+          <Stack.Screen
+            name="Item"
+            component={Item}
+            options={{headerShown: false}}
+          />
+          <Stack.Screen
+            name="Login"
+            component={Login}
+            options={{headerShown: false}}
+          />
+          <Stack.Screen
+            name="NewAccount"
+            component={NewAccount}
+            options={{headerShown: false}}
+          />
+        </Stack.Navigator>
+      </NavigationContainer>
+    </Provider>
   );
 };
 
