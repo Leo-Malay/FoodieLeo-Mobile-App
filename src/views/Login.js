@@ -1,10 +1,11 @@
-import React, {Component} from 'react';
+import React, {useEffect, useState} from 'react';
 import {View, Text, TextInput, StyleSheet} from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 //Helper Component
 import {Button, IconButton} from '../components/Button';
 import {Black, Yellow} from '../Style/color';
 import Notify from '../components/Toast';
+import ErrorHandler from '../components/ErrorHandler';
 // Style
 import style from '../Style/style';
 const Localstyle = StyleSheet.create({
@@ -13,120 +14,85 @@ const Localstyle = StyleSheet.create({
   },
 });
 // Request.
-import {LoginReq, GetCartReq} from '../data/Request';
-
-class Login extends Component {
-  constructor(navigation) {
-    super(navigation);
-    this.state = {
-      navigation: navigation,
-      Username: '',
-      Password: '',
-    };
-  }
-  GetCredentials = async () => {
+import {login} from '../redux/Actions/Auth';
+import {useDispatch, useSelector} from 'react-redux';
+const Login = ({navigation}) => {
+  const dispatch = useDispatch();
+  const [username, setUsername] = useState('');
+  const [password, setPassword] = useState('');
+  const {isAuthenticated, isLoading} = useSelector(state => state.auth);
+  const GetCredentials = async () => {
     try {
-      let User = await AsyncStorage.getItem('Username');
-      let Pass = await AsyncStorage.getItem('Password');
-      this.setState({Username: User, Password: Pass});
+      setUsername(await AsyncStorage.getItem('Username'));
+      setPassword(await AsyncStorage.getItem('Password'));
     } catch (err) {
       throw err;
     }
   };
-  render() {
-    return (
-      <View style={[style.Container, style.Center]}>
-        <View style={[Localstyle.SubContainer]}>
-          <View style={[style.Inline, style.Center]}>
-            <IconButton
-              props={{
-                name: 'fingerprint',
-                size: 70,
-                color: Black,
-                onPress: () => {},
-              }}
-              style={[style.Center]}
-            />
-            <Text
-              style={[style.Text, style.TextBlack, style.Title, style.Center]}>
-              Leo-Login
-            </Text>
-          </View>
-          <TextInput
-            placeholder="Username"
-            style={style.TextInput}
-            value={this.state.Username}
-            onChangeText={text => this.setState({Username: text})}
-            autoCompleteType="username"
-          />
-          <TextInput
-            placeholder="Password"
-            style={style.TextInput}
-            value={this.state.Password}
-            secureTextEntry={true}
-            onChangeText={text => this.setState({Password: text})}
-            autoCompleteType="password"
-          />
-          <Button
+  const submitHandler = async e => {
+    e.preventDefault();
+    dispatch(login(username, password));
+  };
+  useEffect(() => {
+    if (isAuthenticated) navigation.navigate('Drawer');
+    GetCredentials();
+  }, [isAuthenticated]);
+  return (
+    <View style={[style.Container, style.Center]}>
+      <View style={[Localstyle.SubContainer]}>
+        <View style={[style.Inline, style.Center]}>
+          <IconButton
             props={{
-              text: 'Login',
-              width: 300,
-              bgcolor: Yellow,
+              name: 'fingerprint',
+              size: 70,
               color: Black,
-              onPress: async () => {
-                let body = {
-                  username: this.state.Username,
-                  password: this.state.Password,
-                };
-                const fetch_var = LoginReq(body);
-                fetch_var
-                  .then(async data => {
-                    if (data.success == true) {
-                      try {
-                        await AsyncStorage.setItem('token', data.token);
-                        const fetch_var1 = GetCartReq(body);
-                        fetch_var1
-                          .then(async data => {
-                            if (data.success == true) {
-                              await AsyncStorage.setItem('cart', data.cart);
-                              this.state.navigation.navigation.navigate(
-                                'Drawer',
-                              );
-                            }
-                          })
-                          .catch(err => {
-                            Notify('Unable to fetch your cart');
-                            throw err;
-                          });
-                      } catch (err) {
-                        Notify('Unable to connect to server');
-                        throw err;
-                      }
-                    } else {
-                      Notify(data.msg);
-                    }
-                  })
-                  .catch(err => {
-                    Notify('Unable to connect to server');
-                    throw err;
-                  });
-              },
+              onPress: () => {},
             }}
+            style={[style.Center]}
           />
-          <Button
-            props={{
-              text: 'NewAccount',
-              width: 300,
-              bgcolor: Yellow,
-              color: Black,
-              onPress: () => {
-                this.state.navigation.navigation.navigate('NewAccount');
-              },
-            }}
-          />
+          <Text
+            style={[style.Text, style.TextBlack, style.Title, style.Center]}>
+            Leo-Login
+          </Text>
         </View>
+        <TextInput
+          placeholder="Username"
+          style={style.TextInput}
+          value={username}
+          onChangeText={text => setUsername(text)}
+          autoCompleteType="username"
+        />
+        <TextInput
+          placeholder="Password"
+          style={style.TextInput}
+          value={password}
+          secureTextEntry={true}
+          onChangeText={text => setPassword(text)}
+          autoCompleteType="password"
+        />
+        <Button
+          props={{
+            text: isLoading ? '.....' : 'Login',
+            width: 300,
+            bgcolor: Yellow,
+            color: Black,
+            onPress: submitHandler,
+          }}
+        />
+        <Button
+          props={{
+            text: 'NewAccount',
+            width: 300,
+            bgcolor: Yellow,
+            color: Black,
+            onPress: () => {
+              navigation.navigate('NewAccount');
+            },
+          }}
+        />
       </View>
-    );
-  }
-}
+      <ErrorHandler />
+    </View>
+  );
+};
 export default Login;

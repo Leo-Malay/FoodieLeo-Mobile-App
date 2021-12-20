@@ -3,14 +3,13 @@ import {View, Text} from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 // Style
 import style from '../Style/style';
+import {logout} from '../redux/Actions/Auth';
+import {useDispatch} from 'react-redux';
 const Logout = ({navigation}) => {
+  const dispatch = useDispatch();
   const clear = async () => {
-    try {
-      await AsyncStorage.setItem('token', '');
-      navigation.navigate('Welcome');
-    } catch (err) {
-      throw err;
-    }
+    await dispatch(logout());
+    navigation.navigate('Welcome');
   };
   clear();
   return (

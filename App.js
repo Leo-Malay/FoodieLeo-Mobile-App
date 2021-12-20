@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import 'react-native-gesture-handler';
 import {NavigationContainer} from '@react-navigation/native';
 import {createStackNavigator} from '@react-navigation/stack';
@@ -17,7 +17,6 @@ import Store from './store';
 // Making instance.
 const Stack = createStackNavigator();
 const Drawer = createDrawerNavigator();
-
 const Draw = () => {
   return (
     <Drawer.Navigator initialRouteName="Home">

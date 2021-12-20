@@ -4,8 +4,8 @@ import CartReducer from './src/redux/Reducers/Cart';
 
 const Store = configureStore({
   reducer: combineReducers({
-    Auth: AuthReducer,
-    Cart: CartReducer,
+    auth: AuthReducer,
+    cart: CartReducer,
   }),
 });
 
