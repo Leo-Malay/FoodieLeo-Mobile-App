@@ -1,11 +1,15 @@
 import React, {useEffect, useState} from 'react';
-import {View, Text, TextInput, StyleSheet} from 'react-native';
+import {
+  ActivityIndicator,
+  View,
+  Text,
+  TextInput,
+  StyleSheet,
+} from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 //Helper Component
 import {Button, IconButton} from '../components/Button';
 import {Black, Yellow} from '../Style/color';
-import Notify from '../components/Toast';
-import ErrorHandler from '../components/ErrorHandler';
 // Style
 import style from '../Style/style';
 const Localstyle = StyleSheet.create({
@@ -16,6 +20,7 @@ const Localstyle = StyleSheet.create({
 // Request.
 import {login} from '../redux/Actions/Auth';
 import {useDispatch, useSelector} from 'react-redux';
+import {AuthErrorHandler} from '../components/ErrorHandler';
 const Login = ({navigation}) => {
   const dispatch = useDispatch();
   const [username, setUsername] = useState('');
@@ -72,7 +77,11 @@ const Login = ({navigation}) => {
         />
         <Button
           props={{
-            text: isLoading ? '.....' : 'Login',
+            text: isLoading ? (
+              <ActivityIndicator size="small" color="#0000ff" />
+            ) : (
+              'Login'
+            ),
             width: 300,
             bgcolor: Yellow,
             color: Black,
@@ -91,7 +100,7 @@ const Login = ({navigation}) => {
           }}
         />
       </View>
-      <ErrorHandler />
+      <AuthErrorHandler />
     </View>
   );
 };

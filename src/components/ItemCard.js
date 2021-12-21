@@ -3,47 +3,50 @@ import {View, Image, Text, StyleSheet} from 'react-native';
 // Helper Component
 import {IconButton} from './Button';
 import {Veg, NonVeg} from './Label';
-import {BURGER, PIZZA, BEVERAGE} from '../data/Image';
+// Importing Image
+import BEVERAGE from '../assets/img/products/Beverages.jpg';
+import BURGER from '../assets/img/products/Burger.jpg';
+import FRENCHFRIES from '../assets/img/products/ff.jpg';
+import PIZZA from '../assets/img/products/Pizza.jpg';
+import SUB from '../assets/img/products/sub.jpg';
 // Style
 import style from '../Style/style';
 import {Black, Yellow} from '../Style/color';
+import {useDispatch} from 'react-redux';
 const Localstyle = StyleSheet.create({
   Container: {
-    width: 220,
-    margin: 2,
+    margin: 5,
     padding: 0,
+    borderRadius: 5,
+    backgroundColor: Black,
   },
   SubContainer: {
-    padding: 10,
-    backgroundColor: Black,
-    borderBottomLeftRadius: 10,
-    borderBottomRightRadius: 10,
+    margin: 10,
+    flex: 1,
   },
   Img: {
-    width: 220,
-    height: 125,
-    borderTopLeftRadius: 10,
-    borderTopRightRadius: 10,
+    width: 175,
+    height: 100,
     alignSelf: 'auto',
     resizeMode: 'cover',
   },
-  Text: {
-    flex: 1,
-  },
 });
 const ItemCard = ({navigation, props}) => {
+  const dispatch = useDispatch();
   const Labeler = prop => {
-    return prop.veg === 1 ? <Veg /> : <NonVeg />;
+    return prop.veg ? <Veg /> : <NonVeg />;
   };
   const getImg = prop => {
     if (prop == 'BURGER') return BURGER;
     else if (prop == 'PIZZA') return PIZZA;
     else if (prop == 'BEVERAGE') return BEVERAGE;
+    else if (prop == 'SANDWICH') return SUB;
+    else if (prop == 'FRIED') return FRENCHFRIES;
     else return '';
   };
   return (
-    <View style={Localstyle.Container}>
-      <Image source={getImg(props.img)} style={Localstyle.Img} />
+    <View style={[Localstyle.Container, style.Inline]}>
+      <Image source={getImg(props.category)} style={Localstyle.Img} />
       <View style={Localstyle.SubContainer}>
         <View style={style.Inline}>
           <Labeler veg={props.veg} />
@@ -64,16 +67,18 @@ const ItemCard = ({navigation, props}) => {
               style.Text,
               style.TextWhite,
               style.Center,
+              {flex: 1},
             ]}>
-            ${props.cost}
+            ${props.price}
           </Text>
           <IconButton
             props={{
               name: 'add-circle',
               size: 30,
               color: Yellow,
-              onPress: () => {
-                navigation.navigate('Item', props);
+              onPress: async () => {
+                await dispatch({type: 'SET_PRODUCT', data: props});
+                navigation.navigate('Item');
               },
             }}
             style={[style.Right]}

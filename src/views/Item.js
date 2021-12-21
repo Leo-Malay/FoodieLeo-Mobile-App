@@ -1,5 +1,6 @@
-import React, {Component} from 'react';
+import React, {useState} from 'react';
 import {
+  ActivityIndicator,
   View,
   Image,
   Text,
@@ -7,11 +8,15 @@ import {
   Dimensions,
   TextInput,
 } from 'react-native';
-import Notify from '../components/Toast';
 // Helper Component
 import {ScreenHeader} from '../components/Header';
 import {Button, IconButton} from '../components/Button';
-import {BURGER, PIZZA, BEVERAGE} from '../data/Image';
+// Importing Image
+import BEVERAGE from '../assets/img/products/Beverages.jpg';
+import BURGER from '../assets/img/products/Burger.jpg';
+import FRENCHFRIES from '../assets/img/products/ff.jpg';
+import PIZZA from '../assets/img/products/Pizza.jpg';
+import SUB from '../assets/img/products/sub.jpg';
 // Style
 import style from '../Style/style';
 import {Black, White, Yellow} from '../Style/color';
@@ -43,183 +48,126 @@ const Localstyle = StyleSheet.create({
   },
 });
 // Request
-import {PostCartReq} from '../data/Request';
-import AsyncStorage from '@react-native-async-storage/async-storage';
+import {useDispatch, useSelector} from 'react-redux';
+import {AddCart} from '../redux/Actions/Cart';
+import {CartErrorHandler} from '../components/ErrorHandler';
 
-class Item extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      isCart: false,
-      ele_id: -1,
-      quantity: 1,
-    };
-    this.SetQty();
-  }
-  SetQty = async () => {
-    var cart = await AsyncStorage.getItem('cart');
-    cart = JSON.parse(cart);
-    for (var i = 0; i < cart.length; i++) {
-      if (
-        cart[i].type === this.props.route.params.type &&
-        cart[i].uid === this.props.route.params.uid
-      ) {
-        this.setState({
-          isCart: true,
-          ele_id: i,
-          quantity: cart[i].qty,
-        });
-        break;
-      }
-    }
+const Item = ({navigation}) => {
+  const dispatch = useDispatch();
+  const {product} = useSelector(state => state.menu);
+  const {isLoading} = useSelector(state => state.cart);
+  console.log('Item', isLoading);
+  const [qty, setQty] = useState(1);
+  const getImg = prop => {
+    if (prop == 'BURGER') return BURGER;
+    else if (prop == 'PIZZA') return PIZZA;
+    else if (prop == 'BEVERAGE') return BEVERAGE;
+    else if (prop == 'SANDWICH') return SUB;
+    else if (prop == 'FRIED') return FRENCHFRIES;
+    else return '';
   };
-  IncQty = () => {
-    this.setState({quantity: this.state.quantity + 1});
-  };
-  DecQty = () => {
-    if (this.state.quantity > 0) {
-      this.setState({quantity: this.state.quantity - 1});
-    }
-  };
-  render() {
-    const props = this.props.route.params;
-    function getImg(prop) {
-      if (prop == 'BURGER') {
-        return BURGER;
-      } else if (prop == 'PIZZA') {
-        return PIZZA;
-      } else if (prop == 'BEVERAGE') {
-        return BEVERAGE;
-      } else {
-        return '';
-      }
-    }
-    return (
-      <View style={style.Container}>
-        <ScreenHeader
-          navigation={this.props.navigation}
-          props={{name: 'Item'}}
-        />
-        <Image source={getImg(props.img)} style={Localstyle.Img} />
-        <View style={Localstyle.SubContainer}>
-          <View style={style.Inline}>
-            <Text
-              style={[
-                style.Text,
-                style.TextWhite,
-                style.Subtitle,
-                Localstyle.Gen,
-                {flex: 1},
-              ]}>
-              {props.name}
-            </Text>
-            <Text
-              style={[
-                style.Text,
-                style.TextWhite,
-                style.Desc,
-                style.Center,
-                Localstyle.Gen,
-              ]}>
-              ${props.cost}
-            </Text>
-          </View>
+  return (
+    <View style={style.Container}>
+      <ScreenHeader navigation={navigation} props={{name: 'Item'}} />
+      <Image source={getImg(product?.category)} style={Localstyle.Img} />
+      <View style={Localstyle.SubContainer}>
+        <View style={style.Inline}>
+          <Text
+            style={[
+              style.Text,
+              style.TextWhite,
+              style.Subtitle,
+              Localstyle.Gen,
+              {flex: 1},
+            ]}>
+            {product?.name}
+          </Text>
+          <Text
+            style={[
+              style.Text,
+              style.TextWhite,
+              style.Desc,
+              style.Center,
+              Localstyle.Gen,
+            ]}>
+            ${product?.price}
+          </Text>
+        </View>
+        <Text style={[style.Text, style.TextWhite, style.Desc, Localstyle.Gen]}>
+          Ingredients:
+          {' ' + (product?.ingredients && product?.ingredients.join(', '))}
+          {'\n'}
+          {'\n'}
+          Any special request? (*Terms {'&'} Conditions Apply)
+        </Text>
+        <TextInput style={Localstyle.TextIn} multiline={true} />
+        <View style={[style.Inline, {paddingTop: 15}]}>
           <Text
             style={[style.Text, style.TextWhite, style.Desc, Localstyle.Gen]}>
-            Ingredients:
-            {' ' + props.ingredient.join(', ')}
-            {'\n'}
-            {'\n'}
-            Any special request? (*Terms & Conditions Apply)
+            Quantity:{'\t'}
           </Text>
-          <TextInput style={Localstyle.TextIn} multiline={true} />
-          <View style={[style.Inline, {paddingTop: 15}]}>
-            <Text
-              style={[style.Text, style.TextWhite, style.Desc, Localstyle.Gen]}>
-              Quantity:{'\t'}
-            </Text>
-            <View
-              style={[
-                {
-                  backgroundColor: Yellow,
-                  borderRadius: 50,
-                  width: 95,
-                },
-                style.Inline,
-              ]}>
-              <IconButton
-                props={{
-                  name: 'remove',
-                  size: 15,
-                  color: Black,
-                  onPress: () => {
-                    this.DecQty();
-                  },
-                }}
-                style={[style.Left]}
-              />
-              <Text
-                style={[
-                  style.Text,
-                  style.Center,
-                  {flex: 1, color: Black, textAlign: 'center'},
-                ]}>
-                {this.state.quantity}
-              </Text>
-              <IconButton
-                props={{
-                  name: 'add',
-                  size: 15,
-                  color: Black,
-                  onPress: () => {
-                    this.IncQty();
-                  },
-                }}
-                style={style.Right}
-              />
-            </View>
-          </View>
-          <View style={style.screenBottom}>
-            <Button
+          <View
+            style={[
+              {
+                backgroundColor: Yellow,
+                borderRadius: 50,
+                width: 95,
+              },
+              style.Inline,
+            ]}>
+            <IconButton
               props={{
-                text: 'Add to Cart',
-                width: 300,
+                name: 'remove',
+                size: 15,
                 color: Black,
-                bgcolor: Yellow,
-                onPress: async () => {
-                  let body = {
-                    type: props.type,
-                    uid: props.uid,
-                    qty: this.state.quantity,
-                  };
-                  var cart = await AsyncStorage.getItem('cart');
-                  cart = JSON.parse(cart);
-                  if (this.state.isCart == true) {
-                    cart[this.state.ele_id].qty = this.state.quantity;
-                  } else {
-                    cart.push(body);
-                  }
-                  cart = JSON.stringify(cart);
-                  const fetch_var = PostCartReq({cart});
-                  fetch_var
-                    .then(async data => {
-                      await AsyncStorage.setItem('cart', cart);
-                      Notify(data.msg);
-                      if (data.success === true) {
-                        this.props.navigation.navigate('Home');
-                      }
-                    })
-                    .catch(err => {
-                      throw err;
-                    });
+                onPress: () => {
+                  if (qty > 1) setQty(qty - 1);
                 },
               }}
+              style={[style.Left]}
+            />
+            <Text
+              style={[
+                style.Text,
+                style.Center,
+                {flex: 1, color: Black, textAlign: 'center'},
+              ]}>
+              {qty}
+            </Text>
+            <IconButton
+              props={{
+                name: 'add',
+                size: 15,
+                color: Black,
+                onPress: () => {
+                  if (product.buyQtyLimit > qty) setQty(qty + 1);
+                },
+              }}
+              style={style.Right}
             />
           </View>
         </View>
+        <View style={style.screenBottom}>
+          <Button
+            props={{
+              text: isLoading ? (
+                <ActivityIndicator size="large" color="#0000ff" />
+              ) : (
+                'Add to Cart [Total: $' + qty * product.price + ']'
+              ),
+              width: 300,
+              color: Black,
+              bgcolor: Yellow,
+              onPress: async () => {
+                await dispatch(AddCart(product._id, qty));
+              },
+            }}
+          />
+        </View>
       </View>
-    );
-  }
-}
+      <CartErrorHandler />
+    </View>
+  );
+};
 
 export default Item;

@@ -1,9 +1,11 @@
-import React from 'react';
+import React, {useEffect, useState} from 'react';
 import {StyleSheet, View, Text, ScrollView} from 'react-native';
 // Helper Component
 import ItemCard from './ItemCard';
 // Style
 import style from '../Style/style';
+import {useDispatch, useSelector} from 'react-redux';
+import {Product} from '../redux/Actions/Menu';
 const Localstyle = StyleSheet.create({
   Container: {paddingVertical: 20},
   Title: {
@@ -13,6 +15,13 @@ const Localstyle = StyleSheet.create({
 });
 // Main Component
 const Section = ({navigation, props}) => {
+  const dispatch = useDispatch();
+  const {data} = useSelector(state => state.menu);
+  const [menu, setMenu] = useState([]);
+  useEffect(async () => {
+    await setMenu(await dispatch(Product(props.soldBy)));
+  }, [data, menu, dispatch]);
+  console.log(menu);
   return (
     <View style={Localstyle.Container}>
       <Text
@@ -22,19 +31,11 @@ const Section = ({navigation, props}) => {
           style.BlackText,
           {paddingHorizontal: 10, paddingVertical: 5},
         ]}>
-        {props.title}
+        {props.name}
       </Text>
       <ScrollView horizontal>
-        {props.Menu.map(ele => {
-          if (ele.type == props.type) {
-            return (
-              <ItemCard
-                key={ele.type + ele.uid}
-                navigation={navigation}
-                props={ele}
-              />
-            );
-          }
+        {menu?.map((ele, j) => {
+          return <ItemCard key={j} navigation={navigation} props={ele} />;
         })}
       </ScrollView>
     </View>

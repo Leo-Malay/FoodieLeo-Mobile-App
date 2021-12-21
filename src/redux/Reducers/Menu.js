@@ -1,4 +1,4 @@
-const CartReducer = (
+const MenuReducer = (
   state = {isLoading: false, cart: [], err: undefined, suc: undefined},
   action,
 ) => {
@@ -9,14 +9,26 @@ const CartReducer = (
       return {
         ...state,
         isLoading: false,
-        cart: action.data.cart,
+        menu: action.data,
         suc: action.data.msg,
       };
-    case 'MENU_FAILURE':
+    case 'PRODUCT_SUCCESS':
       return {
         ...state,
         isLoading: false,
-        cart: action.data.cart,
+        suc: action.data.msg,
+        data: action.data.data,
+      };
+    case 'SET_PRODUCT':
+      return {
+        ...state,
+        product: action.data,
+      };
+    case 'MENU_FAILURE':
+    case 'PRODUCT_FAILURE':
+      return {
+        ...state,
+        isLoading: false,
         err: action.data.msg,
       };
     case 'CLEAR_MENU_ERROR_SUCCESS':
@@ -26,4 +38,4 @@ const CartReducer = (
   }
 };
 
-export default CartReducer;
+export default MenuReducer;

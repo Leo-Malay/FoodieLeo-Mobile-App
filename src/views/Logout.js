@@ -1,5 +1,5 @@
 import React from 'react';
-import {View, Text} from 'react-native';
+import {ActivityIndicator, View, Text} from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 // Style
 import style from '../Style/style';
@@ -16,6 +16,7 @@ const Logout = ({navigation}) => {
     <View style={[style.Container, style.Center]}>
       <Text style={[style.Title, {paddingTop: 100}]}>
         Logging you out of the App
+        <ActivityIndicator size="large" color="#0000ff" />
       </Text>
     </View>
   );

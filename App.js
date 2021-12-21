@@ -7,6 +7,7 @@ import {createDrawerNavigator} from '@react-navigation/drawer';
 import Account from './src/views/Account';
 import Cart from './src/views/Cart';
 import Home from './src/views/Home';
+import Resturant from './src/views/Resturant';
 import Item from './src/views/Item';
 import Welcome from './src/views/Welcome';
 import Login from './src/views/Login';
@@ -41,6 +42,11 @@ const App = () => {
           <Stack.Screen
             name="Drawer"
             component={Draw}
+            options={{headerShown: false}}
+          />
+          <Stack.Screen
+            name="Resturant"
+            component={Resturant}
             options={{headerShown: false}}
           />
           <Stack.Screen

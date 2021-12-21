@@ -1,10 +1,11 @@
-import React, {Component} from 'react';
+import React from 'react';
 import {View, Text, StyleSheet} from 'react-native';
 import {IconButton} from './Button';
-import {Veg, NonVeg} from './Label';
 // Style
 import style from '../Style/style';
 import {Red, White} from '../Style/color';
+import {useDispatch} from 'react-redux';
+import {RemoveCart} from '../redux/Actions/Cart';
 const Localstyle = StyleSheet.create({
   Container: {
     marginVertical: 5,
@@ -16,16 +17,13 @@ const Localstyle = StyleSheet.create({
   },
 });
 const CartItem = ({props}) => {
-  const GetLabel = () => {
-    return props.veg === 1 ? <Veg /> : <NonVeg />;
-  };
+  const dispatch = useDispatch();
   return (
     <View style={(style.Container, Localstyle.Container)}>
       <View style={style.Inline}>
-        {GetLabel()}
         <Text style={[style.Text, style.TextWhite, style.Title]}>
           {'\t'}
-          {props.name}
+          {props.productName}
         </Text>
       </View>
       <View style={style.Inline}>
@@ -37,9 +35,9 @@ const CartItem = ({props}) => {
             style.Center,
             {flex: 1},
           ]}>
-          Cost: ${props.cost}
+          Cost: ${props.price}
           {'\t\t'}
-          Quantity: {props.quantity}
+          Quantity: {props.qty}
           {'\t\t'}
         </Text>
         <IconButton
@@ -48,7 +46,9 @@ const CartItem = ({props}) => {
             size: 15,
             bgcolor: Red,
             color: White,
-            onPress: props.onPress,
+            onPress: async () => {
+              await dispatch(RemoveCart(props.productId));
+            },
           }}
           style={style.Right}
         />

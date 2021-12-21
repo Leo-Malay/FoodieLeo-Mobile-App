@@ -1,9 +1,14 @@
 import React, {useEffect, useState} from 'react';
-import {View, Text, TextInput, StyleSheet} from 'react-native';
+import {
+  ActivityIndicator,
+  View,
+  Text,
+  TextInput,
+  StyleSheet,
+} from 'react-native';
 //Helper Component
 import {Button, IconButton} from '../components/Button';
 import {Black, Yellow} from '../Style/color';
-import Notify from '../components/Toast';
 // Style
 import style from '../Style/style';
 const Localstyle = StyleSheet.create({
@@ -13,7 +18,7 @@ const Localstyle = StyleSheet.create({
 //import {NewAccountReq} from '../data/Request';
 import {newAccount} from '../redux/Actions/Auth';
 import {useDispatch, useSelector} from 'react-redux';
-import ErrorHandler from '../components/ErrorHandler';
+import {AuthErrorHandler} from '../components/ErrorHandler';
 const NewAccount = ({navigation}) => {
   const dispatch = useDispatch();
   const [fname, setFName] = useState('');
@@ -86,7 +91,11 @@ const NewAccount = ({navigation}) => {
         />
         <Button
           props={{
-            text: isLoading ? '.....' : 'Create Account',
+            text: isLoading ? (
+              <ActivityIndicator size="small" color="#0000ff" />
+            ) : (
+              'Create Account'
+            ),
             width: 300,
             bgcolor: Yellow,
             color: Black,
@@ -105,7 +114,7 @@ const NewAccount = ({navigation}) => {
           }}
         />
       </View>
-      <ErrorHandler />
+      <AuthErrorHandler />
     </View>
   );
 };
