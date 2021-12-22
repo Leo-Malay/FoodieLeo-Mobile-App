@@ -1,9 +1,15 @@
 import React, {useEffect, useState} from 'react';
-import {StyleSheet, View, Text, TextInput} from 'react-native';
+import {
+  ActivityIndicator,
+  StyleSheet,
+  View,
+  Text,
+  TextInput,
+} from 'react-native';
+import {useDispatch, useSelector} from 'react-redux';
 // Helper Component
 import {ScreenHeader} from '../components/Header';
 import {Button} from '../components/Button';
-import Notify from '../components/Toast';
 // Style
 import style from '../Style/style';
 import {Black, Red, Yellow} from '../Style/color';
@@ -17,9 +23,8 @@ const Localstyle = StyleSheet.create({
 });
 // Request
 import {Account as AccReq, updateAccount} from '../redux/Actions/Auth';
-import {useDispatch, useSelector} from 'react-redux';
 const Account = ({navigation}) => {
-  const {isAuthenticated, data} = useSelector(state => state.auth);
+  const {isAuthenticated, data, isLoading} = useSelector(state => state.auth);
   const dispatch = useDispatch();
   const [fname, setFName] = useState('');
   const [lname, setLName] = useState('');
@@ -131,7 +136,13 @@ const Account = ({navigation}) => {
         <View>
           <Button
             props={{
-              text: isEditable ? 'Save' : 'Edit',
+              text: isLoading ? (
+                <ActivityIndicator size="small" color="#0000ff" />
+              ) : isEditable ? (
+                'Save'
+              ) : (
+                'Edit'
+              ),
               width: 300,
               bgcolor: Yellow,
               color: Black,

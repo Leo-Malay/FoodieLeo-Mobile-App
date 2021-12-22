@@ -1,9 +1,9 @@
-import React, {Component} from 'react';
-import {StyleSheet, View, Text, TouchableOpacity} from 'react-native';
+import React from 'react';
+import {StyleSheet, Text, TouchableOpacity} from 'react-native';
 import Icons from 'react-native-vector-icons/MaterialIcons';
 // Style
 import style from '../Style/style';
-import {Black, Blue, White} from '../Style/color';
+import {Blue, White} from '../Style/color';
 const Localstyle = StyleSheet.create({
   Container: {
     padding: 3,

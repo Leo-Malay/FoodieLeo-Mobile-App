@@ -6,21 +6,21 @@ import {
   TextInput,
   StyleSheet,
 } from 'react-native';
+import {useDispatch, useSelector} from 'react-redux';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 //Helper Component
-import {Button, IconButton} from '../components/Button';
-import {Black, Yellow} from '../Style/color';
+import {Button, IconButton} from '../../components/Button';
+import {AuthErrorHandler} from '../../components/ErrorHandler';
 // Style
-import style from '../Style/style';
+import style from '../../Style/style';
+import {Black, Yellow} from '../../Style/color';
 const Localstyle = StyleSheet.create({
   SubContainer: {
     marginTop: 150,
   },
 });
 // Request.
-import {login} from '../redux/Actions/Auth';
-import {useDispatch, useSelector} from 'react-redux';
-import {AuthErrorHandler} from '../components/ErrorHandler';
+import {login} from '../../redux/Actions/Auth';
 const Login = ({navigation}) => {
   const dispatch = useDispatch();
   const [username, setUsername] = useState('');

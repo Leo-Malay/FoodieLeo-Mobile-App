@@ -1,17 +1,16 @@
-import React, {Component, useEffect} from 'react';
+import React, {useEffect} from 'react';
 import {View, Text, ScrollView} from 'react-native';
-import AsyncStorage from '@react-native-async-storage/async-storage';
+import {useDispatch, useSelector} from 'react-redux';
 // Helper Component
 import {ScreenHeader} from '../components/Header';
 import {IconButton, Button} from '../components/Button';
 import CartItem from '../components/CartItem';
+import {CartErrorHandler} from '../components/ErrorHandler';
 // Style
 import style from '../Style/style';
 import {Black, Yellow} from '../Style/color';
 // Request
 import {Cart as CartReq} from '../redux/Actions/Cart';
-import {useDispatch, useSelector} from 'react-redux';
-import {CartErrorHandler} from '../components/ErrorHandler';
 
 const Cart = ({navigation}) => {
   const dispatch = useDispatch();
@@ -19,7 +18,6 @@ const Cart = ({navigation}) => {
   useEffect(() => {
     if (cart === undefined) dispatch(CartReq());
   }, [cart, dispatch, CartReq]);
-  console.log(cart);
   return (
     <View style={style.Container}>
       <ScreenHeader navigation={navigation} props={{name: 'Cart'}} />
@@ -45,7 +43,6 @@ const Cart = ({navigation}) => {
             </Text>
           </View>
         )}
-
         {(cart !== undefined || cart !== []) && (
           <View>
             {cart.map((ele, z) => {

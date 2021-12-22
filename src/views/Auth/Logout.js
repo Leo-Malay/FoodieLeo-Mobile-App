@@ -1,10 +1,10 @@
 import React from 'react';
 import {ActivityIndicator, View, Text} from 'react-native';
-import AsyncStorage from '@react-native-async-storage/async-storage';
+import {useDispatch} from 'react-redux';
+// Request
+import {logout} from '../redux/Actions/Auth';
 // Style
 import style from '../Style/style';
-import {logout} from '../redux/Actions/Auth';
-import {useDispatch} from 'react-redux';
 const Logout = ({navigation}) => {
   const dispatch = useDispatch();
   const clear = async () => {
@@ -14,7 +14,7 @@ const Logout = ({navigation}) => {
   clear();
   return (
     <View style={[style.Container, style.Center]}>
-      <Text style={[style.Title, {paddingTop: 100}]}>
+      <Text style={[style.Title, {paddingTop: 100, textAlign: 'center'}]}>
         Logging you out of the App
         <ActivityIndicator size="large" color="#0000ff" />
       </Text>

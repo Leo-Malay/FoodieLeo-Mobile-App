@@ -1,11 +1,11 @@
 import React from 'react';
 import {View, Text, StyleSheet} from 'react-native';
+import {useDispatch} from 'react-redux';
+// Helper Component
 import {IconButton} from './Button';
 // Style
 import style from '../Style/style';
 import {Red, White} from '../Style/color';
-import {useDispatch} from 'react-redux';
-import {RemoveCart} from '../redux/Actions/Cart';
 const Localstyle = StyleSheet.create({
   Container: {
     marginVertical: 5,
@@ -16,6 +16,8 @@ const Localstyle = StyleSheet.create({
     backgroundColor: '#000',
   },
 });
+// Request
+import {RemoveCart} from '../redux/Actions/Cart';
 const CartItem = ({props}) => {
   const dispatch = useDispatch();
   return (

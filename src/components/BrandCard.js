@@ -1,7 +1,7 @@
 import React from 'react';
-import {View, Image, Text, StyleSheet} from 'react-native';
-// Helper Component
-import {IconButton} from './Button';
+import {Image, Text, StyleSheet} from 'react-native';
+import {TouchableOpacity} from 'react-native-gesture-handler';
+import {useDispatch} from 'react-redux';
 // Importing Image
 import McDonalds from '../assets/img/brands/Mcdonalds.png';
 import PizzaHut from '../assets/img/brands/PizzaHut.png';
@@ -9,10 +9,9 @@ import StarBucks from '../assets/img/brands/StarBucks.png';
 import SubWay from '../assets/img/brands/Subway.png';
 // Style
 import style from '../Style/style';
-import {Black, Yellow} from '../Style/color';
-import {useDispatch} from 'react-redux';
+import {Black} from '../Style/color';
+// Request
 import {Product} from '../redux/Actions/Menu';
-import {TouchableOpacity} from 'react-native-gesture-handler';
 const Localstyle = StyleSheet.create({
   Container: {
     margin: 5,

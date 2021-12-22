@@ -1,23 +1,24 @@
-import React, {useEffect} from 'react';
+import React from 'react';
 import 'react-native-gesture-handler';
 import {NavigationContainer} from '@react-navigation/native';
 import {createStackNavigator} from '@react-navigation/stack';
 import {createDrawerNavigator} from '@react-navigation/drawer';
+import {Provider} from 'react-redux';
+import Store from './store';
 // Importing Views.
-import Account from './src/views/Account';
+import Account from './src/views/Auth/Account';
 import Cart from './src/views/Cart';
 import Home from './src/views/Home';
 import Resturant from './src/views/Resturant';
 import Item from './src/views/Item';
 import Welcome from './src/views/Welcome';
-import Login from './src/views/Login';
-import Logout from './src/views/Logout';
-import NewAccount from './src/views/NewAccount';
-import {Provider} from 'react-redux';
-import Store from './store';
+import Login from './src/views/Auth/Login';
+import Logout from './src/views/Auth/Logout';
+import NewAccount from './src/views/Auth/NewAccount';
 // Making instance.
 const Stack = createStackNavigator();
 const Drawer = createDrawerNavigator();
+
 const Draw = () => {
   return (
     <Drawer.Navigator initialRouteName="Home">

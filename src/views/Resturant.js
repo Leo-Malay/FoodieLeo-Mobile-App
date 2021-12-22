@@ -1,17 +1,17 @@
-import React, {useEffect} from 'react';
-import {StyleSheet, View, ScrollView} from 'react-native';
+import React from 'react';
+import {ActivityIndicator, StyleSheet, View, ScrollView} from 'react-native';
+import {useSelector} from 'react-redux';
 // Helper Component
 import {ScreenHeader} from '../components/Header';
 import ItemCard from '../components/ItemCard';
+import {MenuErrorHandler} from '../components/ErrorHandler';
 // Style
 import style from '../Style/style';
-import {useSelector} from 'react-redux';
-import {MenuErrorHandler} from '../components/ErrorHandler';
+const HomeStyle = StyleSheet.create({
+  container: {backgroundColor: '#e6e6e6'},
+});
 const Resturant = ({navigation}) => {
   const {data, isLoading} = useSelector(state => state.menu);
-  const HomeStyle = StyleSheet.create({
-    container: {backgroundColor: '#e6e6e6'},
-  });
   return (
     <View style={[style.Container, HomeStyle.container]}>
       <ScreenHeader navigation={navigation} props={{name: 'Resturant'}} />

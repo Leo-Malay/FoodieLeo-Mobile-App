@@ -1,8 +1,6 @@
-const Black = '#000';
-const White = '#fff';
-const Red = '#ed4337';
-const Green = '#98ed37';
-const Yellow = '#edc937';
-const Blue = '#376bed';
-
-export {Black, White, Red, Green, Yellow, Blue};
+export const Black = '#000';
+export const White = '#fff';
+export const Red = '#ed4337';
+export const Green = '#98ed37';
+export const Yellow = '#edc937';
+export const Blue = '#376bed';

@@ -94,7 +94,6 @@ const CartReducer = (
         isLoading: false,
         err: 'Unable to Remove Item from Cart',
       };
-
     case 'CLEAR_CART_ERRSUC':
       return {...state, err: undefined, suc: undefined};
     case 'CART_INC_TRIAL':

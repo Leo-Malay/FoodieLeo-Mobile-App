@@ -29,7 +29,6 @@ export const logout = () => async dispatch => {
     const res = await axios.get(url + '/Auth/Logout', {
       withCredentials: true,
     });
-
     if (res.data.success) dispatch({type: 'LOGOUT_SUCCESS'});
     else dispatch({type: 'LOGOUT_FAILURE', data: res.data.msg});
   } catch (error) {
@@ -47,7 +46,6 @@ export const newAccount =
           withCredentials: true,
         },
       );
-
       if (res.data.success)
         dispatch({type: 'NEW_ACCOUNT_SUCCESS', data: res.data.data});
       else dispatch({type: 'NEW_ACCOUNT_FAILURE', data: res.data.msg});

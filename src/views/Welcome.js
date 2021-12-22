@@ -1,18 +1,14 @@
-import React, {Component, useEffect} from 'react';
+import React from 'react';
 import {StyleSheet, View, Text} from 'react-native';
-import AsyncStorage from '@react-native-async-storage/async-storage';
+import {useSelector} from 'react-redux';
+// Helper Component
+import {Button, IconButton} from '../components/Button';
 // Style
 import style from '../Style/style';
+import {Black, Yellow} from '../Style/color';
 const Localstyle = StyleSheet.create({
   Text: {paddingBottom: 20},
 });
-// Helper Component
-import {Button, IconButton} from '../components/Button';
-import {Black, Yellow} from '../Style/color';
-// Request
-// import {MenuReq} from '../data/Request';
-// import Notify from '../components/Toast';
-import {useDispatch, useSelector} from 'react-redux';
 const Welcome = ({navigation}) => {
   const {isAuthenticated} = useSelector(state => state.auth);
   return (

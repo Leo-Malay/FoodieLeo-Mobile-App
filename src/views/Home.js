@@ -1,14 +1,15 @@
 import React, {useEffect} from 'react';
 import {ActivityIndicator, StyleSheet, View, ScrollView} from 'react-native';
-import BrandCard from '../components/BrandCard';
+import {useDispatch, useSelector} from 'react-redux';
 // Helper Component
 import {HomeHeader} from '../components/Header';
+import BrandCard from '../components/BrandCard';
+import {MenuErrorHandler} from '../components/ErrorHandler';
+// Request
 import {Menu} from '../redux/Actions/Menu';
 import {Account} from '../redux/Actions/Auth';
 // Style
 import style from '../Style/style';
-import {useDispatch, useSelector} from 'react-redux';
-import {MenuErrorHandler} from '../components/ErrorHandler';
 const Home = ({navigation}) => {
   const dispatch = useDispatch();
   const {data} = useSelector(state => state.auth);

@@ -1,12 +1,6 @@
 import axios from 'axios';
 const url = 'https://leomalay-backend.herokuapp.com';
 
-const errHandler = (type, dispatch) => {
-  dispatch({
-    type,
-    data: 'Unable to connect to server',
-  });
-};
 export const Cart = () => async dispatch => {
   await dispatch({type: 'CART_REQUEST'});
   try {

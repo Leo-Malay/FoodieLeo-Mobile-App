@@ -6,19 +6,18 @@ import {
   TextInput,
   StyleSheet,
 } from 'react-native';
+import {useDispatch, useSelector} from 'react-redux';
 //Helper Component
 import {Button, IconButton} from '../components/Button';
-import {Black, Yellow} from '../Style/color';
+import {AuthErrorHandler} from '../components/ErrorHandler';
 // Style
 import style from '../Style/style';
+import {Black, Yellow} from '../Style/color';
 const Localstyle = StyleSheet.create({
   SubContainer: {marginTop: 100},
 });
 // Request.
-//import {NewAccountReq} from '../data/Request';
 import {newAccount} from '../redux/Actions/Auth';
-import {useDispatch, useSelector} from 'react-redux';
-import {AuthErrorHandler} from '../components/ErrorHandler';
 const NewAccount = ({navigation}) => {
   const dispatch = useDispatch();
   const [fname, setFName] = useState('');

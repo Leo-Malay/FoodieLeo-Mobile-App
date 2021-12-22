@@ -1,5 +1,6 @@
 import React from 'react';
 import {View, Image, Text, StyleSheet} from 'react-native';
+import {useDispatch} from 'react-redux';
 // Helper Component
 import {IconButton} from './Button';
 import {Veg, NonVeg} from './Label';
@@ -12,7 +13,6 @@ import SUB from '../assets/img/products/sub.jpg';
 // Style
 import style from '../Style/style';
 import {Black, Yellow} from '../Style/color';
-import {useDispatch} from 'react-redux';
 const Localstyle = StyleSheet.create({
   Container: {
     margin: 5,

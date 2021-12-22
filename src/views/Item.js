@@ -8,9 +8,11 @@ import {
   Dimensions,
   TextInput,
 } from 'react-native';
+import {useDispatch, useSelector} from 'react-redux';
 // Helper Component
 import {ScreenHeader} from '../components/Header';
 import {Button, IconButton} from '../components/Button';
+import {CartErrorHandler} from '../components/ErrorHandler';
 // Importing Image
 import BEVERAGE from '../assets/img/products/Beverages.jpg';
 import BURGER from '../assets/img/products/Burger.jpg';
@@ -48,15 +50,12 @@ const Localstyle = StyleSheet.create({
   },
 });
 // Request
-import {useDispatch, useSelector} from 'react-redux';
 import {AddCart} from '../redux/Actions/Cart';
-import {CartErrorHandler} from '../components/ErrorHandler';
 
 const Item = ({navigation}) => {
   const dispatch = useDispatch();
   const {product} = useSelector(state => state.menu);
   const {isLoading} = useSelector(state => state.cart);
-  console.log('Item', isLoading);
   const [qty, setQty] = useState(1);
   const getImg = prop => {
     if (prop == 'BURGER') return BURGER;
@@ -151,7 +150,7 @@ const Item = ({navigation}) => {
           <Button
             props={{
               text: isLoading ? (
-                <ActivityIndicator size="large" color="#0000ff" />
+                <ActivityIndicator size="small" color="#0000ff" />
               ) : (
                 'Add to Cart [Total: $' + qty * product.price + ']'
               ),

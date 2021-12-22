@@ -2,9 +2,9 @@ import React, {useEffect} from 'react';
 import {View} from 'react-native';
 import {useDispatch, useSelector} from 'react-redux';
 import Notify from './Toast';
+const dispatch = useDispatch();
 
 const AuthErrorHandler = () => {
-  const dispatch = useDispatch();
   const {err, suc} = useSelector(state => state.auth);
   useEffect(() => {
     if (err !== undefined) Notify(err);
@@ -14,7 +14,6 @@ const AuthErrorHandler = () => {
   return <View></View>;
 };
 const MenuErrorHandler = () => {
-  const dispatch = useDispatch();
   const {err, suc} = useSelector(state => state.auth);
   useEffect(() => {
     if (err !== undefined) Notify(err);
@@ -24,7 +23,6 @@ const MenuErrorHandler = () => {
   return <View></View>;
 };
 const CartErrorHandler = () => {
-  const dispatch = useDispatch();
   const {err, suc} = useSelector(state => state.cart);
   useEffect(() => {
     if (err !== undefined) Notify(err);
