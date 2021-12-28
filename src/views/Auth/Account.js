@@ -8,11 +8,11 @@ import {
 } from 'react-native';
 import {useDispatch, useSelector} from 'react-redux';
 // Helper Component
-import {ScreenHeader} from '../components/Header';
-import {Button} from '../components/Button';
+import {ScreenHeader} from '../../components/Header';
+import {Button} from '../../components/Button';
 // Style
-import style from '../Style/style';
-import {Black, Red, Yellow} from '../Style/color';
+import style from '../../Style/style';
+import {Black, Red, Yellow} from '../../Style/color';
 const Localstyle = StyleSheet.create({
   Container: {padding: 5},
   TextIn: {
@@ -22,7 +22,7 @@ const Localstyle = StyleSheet.create({
   disclaimer: {fontSize: 12, color: Red},
 });
 // Request
-import {Account as AccReq, updateAccount} from '../redux/Actions/Auth';
+import {Account as AccReq, updateAccount} from '../../redux/Actions/Auth';
 const Account = ({navigation}) => {
   const {isAuthenticated, data, isLoading} = useSelector(state => state.auth);
   const dispatch = useDispatch();

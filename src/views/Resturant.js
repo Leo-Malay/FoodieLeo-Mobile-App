@@ -17,9 +17,17 @@ const Resturant = ({navigation}) => {
       <ScreenHeader navigation={navigation} props={{name: 'Resturant'}} />
       {isLoading && <ActivityIndicator size="large" color="#0000ff" />}
       <ScrollView>
-        {data?.map((ele, j) => {
-          return <ItemCard key={j} navigation={navigation} props={ele} />;
-        })}
+        <View
+          style={{
+            flexDirection: 'row',
+            flexWrap: 'wrap',
+            justifyContent: 'center',
+            alignItems: 'center',
+          }}>
+          {data?.map((ele, j) => {
+            return <ItemCard key={j} navigation={navigation} props={ele} />;
+          })}
+        </View>
       </ScrollView>
       <MenuErrorHandler />
     </View>

@@ -1,5 +1,5 @@
 import React from 'react';
-import {View, Image, Text, StyleSheet} from 'react-native';
+import {View, Image, Text} from 'react-native';
 import {useDispatch} from 'react-redux';
 // Helper Component
 import {IconButton} from './Button';
@@ -13,24 +13,6 @@ import SUB from '../assets/img/products/sub.jpg';
 // Style
 import style from '../Style/style';
 import {Black, Yellow} from '../Style/color';
-const Localstyle = StyleSheet.create({
-  Container: {
-    margin: 5,
-    padding: 0,
-    borderRadius: 5,
-    backgroundColor: Black,
-  },
-  SubContainer: {
-    margin: 10,
-    flex: 1,
-  },
-  Img: {
-    width: 175,
-    height: 100,
-    alignSelf: 'auto',
-    resizeMode: 'cover',
-  },
-});
 const ItemCard = ({navigation, props}) => {
   const dispatch = useDispatch();
   const Labeler = prop => {
@@ -45,45 +27,62 @@ const ItemCard = ({navigation, props}) => {
     else return '';
   };
   return (
-    <View style={[Localstyle.Container, style.Inline]}>
-      <Image source={getImg(props.category)} style={Localstyle.Img} />
-      <View style={Localstyle.SubContainer}>
-        <View style={style.Inline}>
-          <Labeler veg={props.veg} />
-          <Text
-            style={[
-              Localstyle.Text,
-              style.Subtitle,
-              style.Text,
-              style.TextWhite,
-            ]}>
-            {props.name}
-          </Text>
-        </View>
-        <View style={style.Inline}>
-          <Text
-            style={[
-              Localstyle.Text,
-              style.Text,
-              style.TextWhite,
-              style.Center,
-              {flex: 1},
-            ]}>
-            ${props.price}
-          </Text>
-          <IconButton
-            props={{
-              name: 'add-circle',
-              size: 30,
-              color: Yellow,
-              onPress: async () => {
-                await dispatch({type: 'SET_PRODUCT', data: props});
-                navigation.navigate('Item');
-              },
-            }}
-            style={[style.Right]}
-          />
-        </View>
+    <View
+      style={{
+        width: 180,
+        height: 200,
+        paddingTop: 10,
+        margin: 5,
+        justifyContent: 'center',
+        alignItems: 'center',
+        borderRadius: 2,
+        backgroundColor: '#fff',
+      }}>
+      <Text
+        style={{
+          fontSize: 22,
+          textAlign: 'center',
+          fontWeight: 'bold',
+          paddingBottom: 5,
+        }}>
+        {props.name}
+      </Text>
+      <Image
+        source={getImg(props.category)}
+        style={{
+          paddingTop: 0,
+          marginTop: 0,
+          width: 175,
+          height: 100,
+          alignSelf: 'auto',
+          resizeMode: 'contain',
+        }}
+      />
+      <View style={{flexDirection: 'row', flexWrap: 'wrap'}}>
+        <Text
+          style={{
+            fontSize: 16,
+            fontWeight: 'bold',
+            color: Black,
+            paddingTop: 20,
+            paddingLeft: 20,
+            paddingBottom: 5,
+            flex: 1,
+          }}>
+          ${props.price}
+        </Text>
+        <IconButton
+          props={{
+            name: 'add-circle',
+            size: 30,
+            color: Yellow,
+            onPress: async () => {
+              await dispatch({type: 'SET_PRODUCT', data: props});
+              navigation.navigate('Item');
+            },
+          }}
+          style={[style.Right]}
+        />
       </View>
     </View>
   );

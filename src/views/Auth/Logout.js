@@ -2,9 +2,9 @@ import React from 'react';
 import {ActivityIndicator, View, Text} from 'react-native';
 import {useDispatch} from 'react-redux';
 // Request
-import {logout} from '../redux/Actions/Auth';
+import {logout} from '../../redux/Actions/Auth';
 // Style
-import style from '../Style/style';
+import style from '../../Style/style';
 const Logout = ({navigation}) => {
   const dispatch = useDispatch();
   const clear = async () => {

@@ -41,11 +41,11 @@ const IconButton = ({props}) => {
   return (
     <TouchableOpacity
       onPress={props.onPress || (() => {})}
-      style={[
-        Localstyle.Container,
-        Localstyle.Subcontainer,
-        {backgroundColor: props.bgcolor || undefined},
-      ]}>
+      style={{
+        backgroundColor: props.bgcolor || undefined,
+        padding: 10,
+        margin: 5,
+      }}>
       <Icons
         name={props.name}
         size={props.size || 20}
