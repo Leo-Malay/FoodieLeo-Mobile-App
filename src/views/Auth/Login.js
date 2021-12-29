@@ -44,6 +44,7 @@ const Login = ({navigation}) => {
   }, [isAuthenticated]);
   return (
     <View style={[style.Container, style.Center]}>
+      {isAuthenticated && navigation.navigate('Drawer')}
       <View style={[Localstyle.SubContainer]}>
         <View style={[style.Inline, style.Center]}>
           <IconButton

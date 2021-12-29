@@ -43,7 +43,7 @@ const IconButton = ({props}) => {
       onPress={props.onPress || (() => {})}
       style={{
         backgroundColor: props.bgcolor || undefined,
-        padding: 10,
+        padding: props.pad || 10,
         margin: 5,
       }}>
       <Icons

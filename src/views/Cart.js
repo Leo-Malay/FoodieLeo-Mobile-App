@@ -18,9 +18,20 @@ const Cart = ({navigation}) => {
   useEffect(() => {
     if (cart === undefined) dispatch(CartReq());
   }, [cart, dispatch, CartReq]);
+  var total = 0;
   return (
     <View style={style.Container}>
       <ScreenHeader navigation={navigation} props={{name: 'Cart'}} />
+      <Text
+        style={{
+          fontSize: 35,
+          fontWeight: 'bold',
+          paddingTop: 5,
+          paddingLeft: 20,
+          paddingBottom: 10,
+        }}>
+        Your Order
+      </Text>
       <ScrollView>
         {(cart === undefined || cart === []) && (
           <View style={{alignItems: 'center'}}>
@@ -46,11 +57,33 @@ const Cart = ({navigation}) => {
         {(cart !== undefined || cart !== []) && (
           <View>
             {cart.map((ele, z) => {
+              total += ele.price * ele.qty;
               return <CartItem key={z} props={ele} />;
             })}
           </View>
         )}
-        <View style={style.Center}>
+      </ScrollView>
+      <View style={{margin: 10}}>
+        <View style={{flexDirection: 'row', flexWrap: 'wrap'}}>
+          <Text
+            style={{
+              fontSize: 20,
+              paddingLeft: 15,
+              fontWeight: 'bold',
+              flex: 1,
+            }}>
+            Total
+          </Text>
+          <Text style={{fontSize: 20, paddingRight: 15, fontWeight: 'bold'}}>
+            ${total}
+          </Text>
+        </View>
+        <View
+          style={{
+            paddingTop: 10,
+            justifyContent: 'center',
+            alignItems: 'center',
+          }}>
           <Button
             props={{
               text: 'Proceed to CheckOut',
@@ -60,7 +93,8 @@ const Cart = ({navigation}) => {
             }}
           />
         </View>
-      </ScrollView>
+      </View>
+
       <CartErrorHandler />
     </View>
   );

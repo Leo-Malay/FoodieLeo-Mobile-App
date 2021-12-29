@@ -12,7 +12,6 @@ import FRENCHFRIES from '../assets/img/products/ff.jpg';
 import PIZZA from '../assets/img/products/Pizza.jpg';
 import SUB from '../assets/img/products/sub.jpg';
 // Style
-import style from '../Style/style';
 import {Black, White, Yellow} from '../Style/color';
 // Request
 import {AddCart} from '../redux/Actions/Cart';
@@ -46,6 +45,7 @@ const Item = ({navigation}) => {
         source={getImg(product?.category)}
         style={{
           width: '100%',
+          height: '40%',
           resizeMode: 'contain',
         }}
       />
@@ -67,14 +67,16 @@ const Item = ({navigation}) => {
           style={{
             backgroundColor: Yellow,
             borderRadius: 50,
-            width: 140,
+            width: 120,
+            height: 35,
             flexDirection: 'row',
             flexWrap: 'wrap',
           }}>
           <IconButton
             props={{
               name: 'remove',
-              size: 15,
+              size: 18,
+              pad: 4,
               color: Black,
               onPress: () => {
                 if (qty > 1) setQty(qty - 1);
@@ -85,15 +87,17 @@ const Item = ({navigation}) => {
             style={{
               fontSize: 15,
               fontWeight: 'bold',
-              paddingTop: 12,
-              paddingHorizontal: 13,
+              paddingTop: 8,
+              textAlign: 'center',
+              flex: 1,
             }}>
             {qty}
           </Text>
           <IconButton
             props={{
               name: 'add',
-              size: 15,
+              size: 18,
+              pad: 4,
               color: Black,
               onPress: () => {
                 if (product.buyQtyLimit > qty) setQty(qty + 1);
@@ -102,31 +106,46 @@ const Item = ({navigation}) => {
           />
         </View>
       </View>
-      <Text
-        style={{
-          fontSize: 15,
-          fontWeight: 'bold',
-          textAlign: 'center',
-          paddingVertical: 10,
-        }}>
-        Ingredients:
-        {' ' + (product?.ingredients && product?.ingredients.join(', '))}
-        {'\n'}
-        {'\n'}
-        Any special request? (*Terms {'&'} Conditions Apply)
-      </Text>
+      <View style={{flexDirection: 'row', flexWrap: 'wrap', marginTop: 10}}>
+        <Text
+          style={{
+            fontSize: 15,
+            fontWeight: 'bold',
+            textAlign: 'justify',
+            color: Black,
+            paddingVertical: 10,
+            paddingLeft: 15,
+            flex: 1,
+          }}>
+          Ingredients
+        </Text>
+        <Text
+          style={{
+            fontSize: 15,
+            fontWeight: 'bold',
+            textAlign: 'justify',
+            paddingVertical: 10,
+            paddingHorizontal: 10,
+            flex: 2,
+          }}>
+          {product?.ingredients && product?.ingredients.join(', ')}
+        </Text>
+      </View>
       <TextInput
         style={{
           backgroundColor: White,
           borderRadius: 10,
-          width: 200,
+          width: '80%',
           height: 100,
-          padding: 5,
-          margin: 5,
+          paddingHorizontal: 15,
+          marginHorizontal: '10%',
+          marginVertical: 10,
         }}
         multiline={true}
+        placeholder="Any Special Request?"
       />
-      <View style={style.screenBottom}>
+      <View
+        style={{justifyContent: 'center', alignItems: 'center', marginTop: 10}}>
         <Button
           props={{
             text: isLoading ? (

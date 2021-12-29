@@ -1,26 +1,11 @@
 import React, {useEffect, useState} from 'react';
-import {
-  ActivityIndicator,
-  StyleSheet,
-  View,
-  Text,
-  TextInput,
-} from 'react-native';
+import {ActivityIndicator, View, Text, TextInput} from 'react-native';
 import {useDispatch, useSelector} from 'react-redux';
 // Helper Component
 import {ScreenHeader} from '../../components/Header';
 import {Button} from '../../components/Button';
 // Style
-import style from '../../Style/style';
 import {Black, Red, Yellow} from '../../Style/color';
-const Localstyle = StyleSheet.create({
-  Container: {padding: 5},
-  TextIn: {
-    width: 350,
-  },
-  Btn: {alignItems: 'center', paddingBottom: 20},
-  disclaimer: {fontSize: 12, color: Red},
-});
 // Request
 import {Account as AccReq, updateAccount} from '../../redux/Actions/Auth';
 const Account = ({navigation}) => {
@@ -58,82 +43,157 @@ const Account = ({navigation}) => {
     if (data?.pincode) setPincode(data?.pincode);
   }, [data, dispatch]);
   return (
-    <View style={style.Container}>
+    <View>
       <ScreenHeader navigation={navigation} props={{name: 'Account'}} />
-      <View style={[Localstyle.Container, {alignItems: 'center'}]}>
-        <Text style={[style.Text, style.Subtitle]}>
-          Welcome {fname + ' ' + lname}, Here you will be able to edit your
-          account info :)
+      <View>
+        <Text style={{fontSize: 35, paddingLeft: 20, fontWeight: 'bold'}}>
+          Account
+        </Text>
+        <Text style={{fontSize: 20, paddingLeft: 20, paddingBottom: 20}}>
+          Welcome {fname + ' ' + lname}
         </Text>
         <TextInput
-          style={[style.TextInput, Localstyle.TextIn]}
+          style={{
+            width: '90%',
+            marginHorizontal: '5%',
+            borderWidth: 0.5,
+            borderRadius: 5,
+            paddingHorizontal: 20,
+            paddingVertical: 5,
+            marginVertical: 5,
+          }}
           placeholder="First Name"
           value={fname}
           onChangeText={text => setFName(text)}
           editable={false}
         />
         <TextInput
-          style={[style.TextInput, Localstyle.TextIn]}
+          style={{
+            width: '90%',
+            marginHorizontal: '5%',
+            borderWidth: 0.5,
+            borderRadius: 5,
+            paddingHorizontal: 20,
+            paddingVertical: 5,
+            marginVertical: 5,
+          }}
           placeholder="Last Name"
           value={lname}
           onChangeText={text => setLName(text)}
           editable={false}
         />
         <TextInput
-          style={[style.TextInput, Localstyle.TextIn]}
+          style={{
+            width: '90%',
+            marginHorizontal: '5%',
+            borderWidth: 0.5,
+            borderRadius: 5,
+            paddingHorizontal: 20,
+            paddingVertical: 5,
+            marginVertical: 5,
+          }}
           placeholder="Email"
           value={email}
           onChangeText={text => setEmail(text)}
           editable={false}
         />
         <TextInput
-          style={[style.TextInput, Localstyle.TextIn]}
+          style={{
+            width: '90%',
+            marginHorizontal: '5%',
+            borderWidth: 0.5,
+            borderRadius: 5,
+            paddingHorizontal: 20,
+            paddingVertical: 5,
+            marginVertical: 5,
+          }}
           placeholder="Address Line 1"
           value={al1}
           onChangeText={text => setAl1(text)}
-          height={50}
-          multiline={true}
           editable={isEditable}
         />
         <TextInput
-          style={[style.TextInput, Localstyle.TextIn]}
+          style={{
+            width: '90%',
+            marginHorizontal: '5%',
+            borderWidth: 0.5,
+            borderRadius: 5,
+            paddingHorizontal: 20,
+            paddingVertical: 5,
+            marginVertical: 5,
+          }}
           placeholder="Address Line 2"
           value={al2}
           onChangeText={text => setAl2(text)}
-          height={50}
-          multiline={true}
           editable={isEditable}
         />
         <TextInput
-          style={[style.TextInput, Localstyle.TextIn]}
+          style={{
+            width: '90%',
+            marginHorizontal: '5%',
+            borderWidth: 0.5,
+            borderRadius: 5,
+            paddingHorizontal: 20,
+            paddingVertical: 5,
+            marginVertical: 5,
+          }}
           placeholder="City"
           value={city}
           onChangeText={text => setCity(text)}
           editable={isEditable}
         />
         <TextInput
-          style={[style.TextInput, Localstyle.TextIn]}
+          style={{
+            width: '90%',
+            marginHorizontal: '5%',
+            borderWidth: 0.5,
+            borderRadius: 5,
+            paddingHorizontal: 20,
+            paddingVertical: 5,
+            marginVertical: 5,
+          }}
           placeholder="State"
           value={state}
           onChangeText={text => setState(text)}
           editable={isEditable}
         />
         <TextInput
-          style={[style.TextInput, Localstyle.TextIn]}
+          style={{
+            width: '90%',
+            marginHorizontal: '5%',
+            borderWidth: 0.5,
+            borderRadius: 5,
+            paddingHorizontal: 20,
+            paddingVertical: 5,
+            marginVertical: 5,
+          }}
           placeholder="Country"
           value={country}
           onChangeText={text => setCountry(text)}
           editable={isEditable}
         />
         <TextInput
-          style={[style.TextInput, Localstyle.TextIn]}
+          style={{
+            width: '90%',
+            marginHorizontal: '5%',
+            borderWidth: 0.5,
+            borderRadius: 5,
+            paddingHorizontal: 20,
+            paddingVertical: 5,
+            marginVertical: 5,
+          }}
           placeholder="Country"
           value={pincode}
           onChangeText={text => setPincode(text)}
           editable={isEditable}
         />
 
-        <View>
+        <View
+          style={{
+            paddingTop: 10,
+            justifyContent: 'center',
+            alignItems: 'center',
+          }}>
           <Button
             props={{
               text: isLoading ? (
@@ -150,7 +210,7 @@ const Account = ({navigation}) => {
             }}
           />
         </View>
-        <Text style={[style.Text, Localstyle.disclaimer, style.Center]}>
+        <Text style={{fontSize: 10, paddingLeft: 20, color: Red}}>
           ***Somethings may take some time as server is frequently under
           development. Feel free to contact me at malaybhavsar.290@gmail.com***
         </Text>
