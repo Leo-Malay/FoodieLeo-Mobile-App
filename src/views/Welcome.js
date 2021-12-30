@@ -1,63 +1,50 @@
 import React from 'react';
-import {StyleSheet, View, Text} from 'react-native';
+import {StyleSheet, View, Text, ImageBackground} from 'react-native';
 import {useSelector} from 'react-redux';
 // Helper Component
 import {Button, IconButton} from '../components/Button';
+import WelcomeImg from '../assets/img/general/Welcome.jpg';
 // Style
 import style from '../Style/style';
-import {Black, Yellow} from '../Style/color';
+import {Black, White, Yellow} from '../Style/color';
 const Localstyle = StyleSheet.create({
   Text: {paddingBottom: 20},
 });
 const Welcome = ({navigation}) => {
   const {isAuthenticated} = useSelector(state => state.auth);
   return (
-    <View style={style.Container}>
+    <ImageBackground
+      source={WelcomeImg}
+      style={{
+        width: '100%',
+        height: '100%',
+        borderRadius: 5,
+        alignSelf: 'auto',
+        resizeMode: 'cover',
+      }}>
       <View style={style.screenBottom}>
-        <IconButton
-          props={{
-            name: 'fastfood',
-            size: 200,
-            color: Black,
-            onPress: () => {},
-          }}
-        />
-        <View style={style.Inline}>
-          <IconButton
-            props={{
-              name: 'remove',
-              size: 80,
-              color: Black,
-              onPress: () => {},
-            }}
-          />
-          <IconButton
-            props={{
-              name: 'delivery-dining',
-              size: 80,
-              color: Black,
-              onPress: () => {},
-            }}
-          />
-          <IconButton
-            props={{
-              name: 'remove',
-              size: 80,
-              color: Black,
-              onPress: () => {},
-            }}
-          />
-        </View>
-        <Text style={[style.SuperTitle, style.Text, {marginTop: 30}]}>
+        <Text
+          style={{
+            fontSize: 60,
+            color: White,
+            fontWeight: 'bold',
+            paddingBottom: 10,
+          }}>
           FoodieLeo
         </Text>
-        <Text style={[style.Subtitle, style.Text, Localstyle.Text]}>
+        <Text
+          style={{
+            fontSize: 20,
+            color: White,
+            fontWeight: 'bold',
+            paddingBottom: 30,
+          }}>
           Fast, Delicious {'&'} Satisfying
         </Text>
         <Button
           props={{
             text: "Let's Go Grab Something :)",
-            width: 250,
+            width: 300,
             bgcolor: Yellow,
             color: Black,
             onPress: () => {
@@ -68,7 +55,7 @@ const Welcome = ({navigation}) => {
           }}
         />
       </View>
-    </View>
+    </ImageBackground>
   );
 };
 

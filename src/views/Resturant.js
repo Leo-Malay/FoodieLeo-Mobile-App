@@ -6,6 +6,7 @@ import {ScreenHeader} from '../components/Header';
 import ItemCard from '../components/ItemCard';
 import {MenuErrorHandler} from '../components/ErrorHandler';
 // Style
+import General from '../Style/General';
 const Resturant = ({navigation}) => {
   const {data, isLoading} = useSelector(state => state.menu);
   return (
@@ -13,15 +14,7 @@ const Resturant = ({navigation}) => {
       <ScrollView>
         <ScreenHeader navigation={navigation} props={{name: 'Resturant'}} />
         {isLoading && <ActivityIndicator size="large" color="#0000ff" />}
-        <Text
-          style={{
-            fontSize: 35,
-            paddingLeft: 20,
-            fontWeight: 'bold',
-            paddingVertical: 10,
-          }}>
-          Menu
-        </Text>
+        <Text style={General.PageHead}>Menu</Text>
         <View
           style={{
             flexDirection: 'row',

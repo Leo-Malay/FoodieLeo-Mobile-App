@@ -5,6 +5,8 @@ import {useDispatch, useSelector} from 'react-redux';
 import {ScreenHeader} from '../../components/Header';
 import {Button} from '../../components/Button';
 // Style
+import General from '../../Style/General';
+import Auth from '../../Style/Auth';
 import {Black, Red, Yellow} from '../../Style/color';
 // Request
 import {Account as AccReq, updateAccount} from '../../redux/Actions/Auth';
@@ -46,142 +48,66 @@ const Account = ({navigation}) => {
     <View>
       <ScreenHeader navigation={navigation} props={{name: 'Account'}} />
       <View>
-        <Text style={{fontSize: 35, paddingLeft: 20, fontWeight: 'bold'}}>
-          Account
-        </Text>
-        <Text style={{fontSize: 20, paddingLeft: 20, paddingBottom: 20}}>
-          Welcome {fname + ' ' + lname}
-        </Text>
+        <Text style={General.PageHead}>Account</Text>
+        <Text style={General.PageSubHead}>Welcome {fname + ' ' + lname}</Text>
         <TextInput
-          style={{
-            width: '90%',
-            marginHorizontal: '5%',
-            borderWidth: 0.5,
-            borderRadius: 5,
-            paddingHorizontal: 20,
-            paddingVertical: 5,
-            marginVertical: 5,
-          }}
+          style={Auth.Input}
           placeholder="First Name"
           value={fname}
           onChangeText={text => setFName(text)}
           editable={false}
         />
         <TextInput
-          style={{
-            width: '90%',
-            marginHorizontal: '5%',
-            borderWidth: 0.5,
-            borderRadius: 5,
-            paddingHorizontal: 20,
-            paddingVertical: 5,
-            marginVertical: 5,
-          }}
+          style={Auth.Input}
           placeholder="Last Name"
           value={lname}
           onChangeText={text => setLName(text)}
           editable={false}
         />
         <TextInput
-          style={{
-            width: '90%',
-            marginHorizontal: '5%',
-            borderWidth: 0.5,
-            borderRadius: 5,
-            paddingHorizontal: 20,
-            paddingVertical: 5,
-            marginVertical: 5,
-          }}
+          style={Auth.Input}
           placeholder="Email"
           value={email}
           onChangeText={text => setEmail(text)}
           editable={false}
         />
         <TextInput
-          style={{
-            width: '90%',
-            marginHorizontal: '5%',
-            borderWidth: 0.5,
-            borderRadius: 5,
-            paddingHorizontal: 20,
-            paddingVertical: 5,
-            marginVertical: 5,
-          }}
+          style={Auth.Input}
           placeholder="Address Line 1"
           value={al1}
           onChangeText={text => setAl1(text)}
           editable={isEditable}
         />
         <TextInput
-          style={{
-            width: '90%',
-            marginHorizontal: '5%',
-            borderWidth: 0.5,
-            borderRadius: 5,
-            paddingHorizontal: 20,
-            paddingVertical: 5,
-            marginVertical: 5,
-          }}
+          style={Auth.Input}
           placeholder="Address Line 2"
           value={al2}
           onChangeText={text => setAl2(text)}
           editable={isEditable}
         />
         <TextInput
-          style={{
-            width: '90%',
-            marginHorizontal: '5%',
-            borderWidth: 0.5,
-            borderRadius: 5,
-            paddingHorizontal: 20,
-            paddingVertical: 5,
-            marginVertical: 5,
-          }}
+          style={Auth.Input}
           placeholder="City"
           value={city}
           onChangeText={text => setCity(text)}
           editable={isEditable}
         />
         <TextInput
-          style={{
-            width: '90%',
-            marginHorizontal: '5%',
-            borderWidth: 0.5,
-            borderRadius: 5,
-            paddingHorizontal: 20,
-            paddingVertical: 5,
-            marginVertical: 5,
-          }}
+          style={Auth.Input}
           placeholder="State"
           value={state}
           onChangeText={text => setState(text)}
           editable={isEditable}
         />
         <TextInput
-          style={{
-            width: '90%',
-            marginHorizontal: '5%',
-            borderWidth: 0.5,
-            borderRadius: 5,
-            paddingHorizontal: 20,
-            paddingVertical: 5,
-            marginVertical: 5,
-          }}
+          style={Auth.Input}
           placeholder="Country"
           value={country}
           onChangeText={text => setCountry(text)}
           editable={isEditable}
         />
         <TextInput
-          style={{
-            width: '90%',
-            marginHorizontal: '5%',
-            borderWidth: 0.5,
-            borderRadius: 5,
-            paddingHorizontal: 20,
-            paddingVertical: 5,
-            marginVertical: 5,
-          }}
+          style={Auth.Input}
           placeholder="Country"
           value={pincode}
           onChangeText={text => setPincode(text)}

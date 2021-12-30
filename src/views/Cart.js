@@ -7,6 +7,7 @@ import {IconButton, Button} from '../components/Button';
 import CartItem from '../components/CartItem';
 import {CartErrorHandler} from '../components/ErrorHandler';
 // Style
+import General from '../Style/General';
 import style from '../Style/style';
 import {Black, Yellow} from '../Style/color';
 // Request
@@ -22,16 +23,7 @@ const Cart = ({navigation}) => {
   return (
     <View style={style.Container}>
       <ScreenHeader navigation={navigation} props={{name: 'Cart'}} />
-      <Text
-        style={{
-          fontSize: 35,
-          fontWeight: 'bold',
-          paddingTop: 5,
-          paddingLeft: 20,
-          paddingBottom: 10,
-        }}>
-        Your Order
-      </Text>
+      <Text style={General.PageHead}>Your Order</Text>
       <ScrollView>
         {(cart === undefined || cart === []) && (
           <View style={{alignItems: 'center'}}>

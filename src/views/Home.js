@@ -15,6 +15,7 @@ import {MenuErrorHandler} from '../components/ErrorHandler';
 import {Menu} from '../redux/Actions/Menu';
 import {Account} from '../redux/Actions/Auth';
 // Style
+import General from '../Style/General';
 import style from '../Style/style';
 import {TextInput} from 'react-native-gesture-handler';
 const Home = ({navigation}) => {
@@ -40,23 +41,8 @@ const Home = ({navigation}) => {
           }}
         />
         {isLoading && <ActivityIndicator size="large" color="#0000ff" />}
-        <Text
-          style={{
-            fontSize: 45,
-            fontWeight: 'bold',
-            paddingTop: 15,
-            paddingLeft: 20,
-          }}>
-          Welcome,
-        </Text>
-        <Text
-          style={{
-            fontSize: 25,
-            paddingLeft: 20,
-            paddingBottom: 10,
-          }}>
-          Whats on your mind?
-        </Text>
+        <Text style={General.PageHead}>Welcome,</Text>
+        <Text style={General.PageSubHead}>Whats on your mind?</Text>
         <View style={{justifyContent: 'center', alignItems: 'center'}}>
           <TextInput
             style={{

@@ -4,21 +4,17 @@ import {
   View,
   Text,
   TextInput,
-  StyleSheet,
+  ImageBackground,
 } from 'react-native';
 import {useDispatch, useSelector} from 'react-redux';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 //Helper Component
-import {Button, IconButton} from '../../components/Button';
+import {Button} from '../../components/Button';
 import {AuthErrorHandler} from '../../components/ErrorHandler';
 // Style
-import style from '../../Style/style';
+import Auth from '../../Style/Auth';
 import {Black, Yellow} from '../../Style/color';
-const Localstyle = StyleSheet.create({
-  SubContainer: {
-    marginTop: 150,
-  },
-});
+import LoginImg from '../../assets/img/general/Login.jpg';
 // Request.
 import {login} from '../../redux/Actions/Auth';
 const Login = ({navigation}) => {
@@ -43,66 +39,56 @@ const Login = ({navigation}) => {
     GetCredentials();
   }, [isAuthenticated]);
   return (
-    <View style={[style.Container, style.Center]}>
-      {isAuthenticated && navigation.navigate('Drawer')}
-      <View style={[Localstyle.SubContainer]}>
-        <View style={[style.Inline, style.Center]}>
-          <IconButton
-            props={{
-              name: 'fingerprint',
-              size: 70,
-              color: Black,
-              onPress: () => {},
-            }}
-            style={[style.Center]}
+    <ImageBackground source={LoginImg} style={Auth.BgImage}>
+      <View style={Auth.Container}>
+        <View style={Auth.Card}>
+          <Text style={Auth.CardTitle}>Login</Text>
+          <TextInput
+            placeholder="Username"
+            style={Auth.Input}
+            value={username}
+            onChangeText={text => setUsername(text)}
+            autoCompleteType="username"
           />
-          <Text
-            style={[style.Text, style.TextBlack, style.Title, style.Center]}>
-            Leo-Login
-          </Text>
+          <TextInput
+            placeholder="Password"
+            style={Auth.Input}
+            value={password}
+            secureTextEntry={true}
+            onChangeText={text => setPassword(text)}
+            autoCompleteType="password"
+          />
+          <Button
+            props={{
+              text: isLoading ? (
+                <ActivityIndicator size="small" color="#0000ff" />
+              ) : (
+                'Login'
+              ),
+              width: 300,
+              bgcolor: Yellow,
+              color: Black,
+              onPress: submitHandler,
+            }}
+          />
+          <Button
+            props={{
+              text: 'NewAccount',
+              width: 300,
+              bgcolor: Yellow,
+              color: Black,
+              onPress: () => {
+                navigation.navigate('NewAccount');
+              },
+            }}
+          />
+          <View style={Auth.SaluteContainer}>
+            <Text style={Auth.Salute}>Made with 💛 By Malay Bhavsar</Text>
+          </View>
         </View>
-        <TextInput
-          placeholder="Username"
-          style={style.TextInput}
-          value={username}
-          onChangeText={text => setUsername(text)}
-          autoCompleteType="username"
-        />
-        <TextInput
-          placeholder="Password"
-          style={style.TextInput}
-          value={password}
-          secureTextEntry={true}
-          onChangeText={text => setPassword(text)}
-          autoCompleteType="password"
-        />
-        <Button
-          props={{
-            text: isLoading ? (
-              <ActivityIndicator size="small" color="#0000ff" />
-            ) : (
-              'Login'
-            ),
-            width: 300,
-            bgcolor: Yellow,
-            color: Black,
-            onPress: submitHandler,
-          }}
-        />
-        <Button
-          props={{
-            text: 'NewAccount',
-            width: 300,
-            bgcolor: Yellow,
-            color: Black,
-            onPress: () => {
-              navigation.navigate('NewAccount');
-            },
-          }}
-        />
       </View>
       <AuthErrorHandler />
-    </View>
+    </ImageBackground>
   );
 };
 export default Login;

@@ -4,18 +4,16 @@ import {
   View,
   Text,
   TextInput,
-  StyleSheet,
+  ImageBackground,
 } from 'react-native';
 import {useDispatch, useSelector} from 'react-redux';
 //Helper Component
-import {Button, IconButton} from '../../components/Button';
+import {Button} from '../../components/Button';
 import {AuthErrorHandler} from '../../components/ErrorHandler';
 // Style
-import style from '../../Style/style';
+import Auth from '../../Style/Auth';
 import {Black, Yellow} from '../../Style/color';
-const Localstyle = StyleSheet.create({
-  SubContainer: {marginTop: 100},
-});
+import NewAccountImg from '../../assets/img/general/Login.jpg';
 // Request.
 import {newAccount} from '../../redux/Actions/Auth';
 const NewAccount = ({navigation}) => {
@@ -34,87 +32,78 @@ const NewAccount = ({navigation}) => {
     if (isAuthenticated) navigation.navigate('Home');
   }, [isAuthenticated]);
   return (
-    <View style={[style.Container, style.Center]}>
-      <View style={[Localstyle.SubContainer]}>
-        <View style={[style.Inline, style.Center]}>
-          <IconButton
-            props={{
-              name: 'account-circle',
-              size: 70,
-              color: Black,
-              onPress: () => {},
-            }}
-            style={[style.Center]}
+    <ImageBackground source={NewAccountImg} style={Auth.BgImage}>
+      <View style={Auth.Container}>
+        <View style={Auth.Card}>
+          <Text style={Auth.CardTitle}>New Account</Text>
+          <TextInput
+            placeholder="First Name"
+            style={Auth.Input}
+            value={fname}
+            onChangeText={text => setFName(text)}
+            autoCompleteType="name"
           />
-          <Text
-            style={[style.Text, style.TextBlack, style.Title, style.Center]}>
-            Leo-Login
-          </Text>
+          <TextInput
+            placeholder="Last Name"
+            style={Auth.Input}
+            value={lname}
+            onChangeText={text => setLName(text)}
+            autoCompleteType="name"
+          />
+          <TextInput
+            placeholder="Email"
+            style={Auth.Input}
+            value={email}
+            onChangeText={text => setEmail(text)}
+            autoCompleteType="email"
+            keyboardType="email-address"
+          />
+          <TextInput
+            placeholder="Username"
+            style={Auth.Input}
+            value={username}
+            onChangeText={text => setUsername(text)}
+            autoCompleteType="username"
+          />
+          <TextInput
+            placeholder="Password"
+            style={Auth.Input}
+            secureTextEntry={true}
+            value={password}
+            onChangeText={text => setPassword(text)}
+            autoCompleteType="password"
+          />
+          <Button
+            props={{
+              text: isLoading ? (
+                <ActivityIndicator size="small" color="#0000ff" />
+              ) : (
+                'Create Account'
+              ),
+              width: 300,
+              bgcolor: Yellow,
+              color: Black,
+              onPress: submitHandler,
+            }}
+          />
+          <Button
+            props={{
+              text: 'Already Have Account',
+              width: 300,
+              bgcolor: Yellow,
+              color: Black,
+              onPress: () => {
+                navigation.navigate('Login');
+              },
+            }}
+          />
+          <View style={Auth.SaluteContainer}>
+            <Text style={Auth.Salute}>Made with 💛 By Malay Bhavsar</Text>
+          </View>
         </View>
-        <TextInput
-          placeholder="First Name"
-          style={style.TextInput}
-          value={fname}
-          onChangeText={text => setFName(text)}
-          autoCompleteType="name"
-        />
-        <TextInput
-          placeholder="Last Name"
-          style={style.TextInput}
-          value={lname}
-          onChangeText={text => setLName(text)}
-          autoCompleteType="name"
-        />
-        <TextInput
-          placeholder="Email"
-          style={style.TextInput}
-          value={email}
-          onChangeText={text => setEmail(text)}
-          autoCompleteType="email"
-          keyboardType="email-address"
-        />
-        <TextInput
-          placeholder="Username"
-          style={style.TextInput}
-          value={username}
-          onChangeText={text => setUsername(text)}
-          autoCompleteType="username"
-        />
-        <TextInput
-          placeholder="Password"
-          style={style.TextInput}
-          secureTextEntry={true}
-          value={password}
-          onChangeText={text => setPassword(text)}
-          autoCompleteType="password"
-        />
-        <Button
-          props={{
-            text: isLoading ? (
-              <ActivityIndicator size="small" color="#0000ff" />
-            ) : (
-              'Create Account'
-            ),
-            width: 300,
-            bgcolor: Yellow,
-            color: Black,
-            onPress: submitHandler,
-          }}
-        />
-        <Button
-          props={{
-            text: 'Already Have Account',
-            width: 300,
-            bgcolor: Yellow,
-            color: Black,
-            onPress: () => {
-              navigation.navigate('Login');
-            },
-          }}
-        />
       </View>
       <AuthErrorHandler />
-    </View>
+    </ImageBackground>
   );
 };
 export default NewAccount;
