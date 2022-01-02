@@ -7,14 +7,13 @@ import {
   ImageBackground,
 } from 'react-native';
 import {useDispatch, useSelector} from 'react-redux';
-import AsyncStorage from '@react-native-async-storage/async-storage';
 //Helper Component
 import {Button} from '../../components/Button';
 import {AuthErrorHandler} from '../../components/ErrorHandler';
 // Style
 import Auth from '../../Style/Auth';
 import {Black, Yellow} from '../../Style/color';
-import LoginImg from '../../assets/img/general/Login.jpg';
+import LoginImg from '../../assets/img/general/Login.webp';
 // Request.
 import {login} from '../../redux/Actions/Auth';
 const Login = ({navigation}) => {
@@ -22,14 +21,6 @@ const Login = ({navigation}) => {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const {isAuthenticated, isLoading} = useSelector(state => state.auth);
-  const GetCredentials = async () => {
-    try {
-      setUsername(await AsyncStorage.getItem('Username'));
-      setPassword(await AsyncStorage.getItem('Password'));
-    } catch (err) {
-      throw err;
-    }
-  };
   const submitHandler = async e => {
     e.preventDefault();
     dispatch(login(username, password));

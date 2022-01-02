@@ -13,7 +13,7 @@ import {AuthErrorHandler} from '../../components/ErrorHandler';
 // Style
 import Auth from '../../Style/Auth';
 import {Black, Yellow} from '../../Style/color';
-import NewAccountImg from '../../assets/img/general/Login.jpg';
+import NewAccountImg from '../../assets/img/general/Login.webp';
 // Request.
 import {newAccount} from '../../redux/Actions/Auth';
 const NewAccount = ({navigation}) => {

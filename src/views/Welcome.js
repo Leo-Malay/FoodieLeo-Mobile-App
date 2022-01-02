@@ -3,7 +3,7 @@ import {View, Text, ImageBackground} from 'react-native';
 import {useSelector} from 'react-redux';
 // Helper Component
 import {Button} from '../components/Button';
-import WelcomeImg from '../assets/img/general/Welcome.jpg';
+import WelcomeImg from '../assets/img/general/Welcome.webp';
 // Style
 import style from '../Style/style';
 import {Black, White, Yellow} from '../Style/color';

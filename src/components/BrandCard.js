@@ -3,10 +3,10 @@ import {Image, Text, StyleSheet} from 'react-native';
 import {TouchableOpacity} from 'react-native-gesture-handler';
 import {useDispatch} from 'react-redux';
 // Importing Image
-import McDonalds from '../assets/img/brands/Mcdonalds.png';
-import PizzaHut from '../assets/img/brands/PizzaHut.png';
-import StarBucks from '../assets/img/brands/StarBucks.png';
-import SubWay from '../assets/img/brands/Subway.png';
+import McDonalds from '../assets/img/brands/Mcdonalds.webp';
+import PizzaHut from '../assets/img/brands/PizzaHut.webp';
+import StarBucks from '../assets/img/brands/StarBucks.webp';
+import SubWay from '../assets/img/brands/Subway.webp';
 // Request
 import {Product} from '../redux/Actions/Menu';
 

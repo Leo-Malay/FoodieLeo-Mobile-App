@@ -4,7 +4,6 @@ import {View, Text} from 'react-native';
 import {IconButton} from './Button';
 // Style
 import {Black} from '../Style/color';
-import {CardStyleInterpolators} from '@react-navigation/stack';
 import {useSelector} from 'react-redux';
 // Main Component
 const ScreenHeader = ({navigation, props}) => {

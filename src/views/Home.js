@@ -5,6 +5,7 @@ import {
   View,
   ScrollView,
   Text,
+  TextInput,
 } from 'react-native';
 import {useDispatch, useSelector} from 'react-redux';
 // Helper Component
@@ -17,7 +18,6 @@ import {Account} from '../redux/Actions/Auth';
 // Style
 import General from '../Style/General';
 import style from '../Style/style';
-import {TextInput} from 'react-native-gesture-handler';
 const Home = ({navigation}) => {
   const dispatch = useDispatch();
   const {data} = useSelector(state => state.auth);
@@ -70,21 +70,6 @@ const Home = ({navigation}) => {
           Found Near You!
         </Text>
         <View style={{flexDirection: 'row', flexWrap: 'wrap'}}>
-          {menu?.map((ele, i) => {
-            return <BrandCard key={i} props={ele} navigation={navigation} />;
-          })}
-          {menu?.map((ele, i) => {
-            return <BrandCard key={i} props={ele} navigation={navigation} />;
-          })}
-          {menu?.map((ele, i) => {
-            return <BrandCard key={i} props={ele} navigation={navigation} />;
-          })}
-          {menu?.map((ele, i) => {
-            return <BrandCard key={i} props={ele} navigation={navigation} />;
-          })}
-          {menu?.map((ele, i) => {
-            return <BrandCard key={i} props={ele} navigation={navigation} />;
-          })}
           {menu?.map((ele, i) => {
             return <BrandCard key={i} props={ele} navigation={navigation} />;
           })}
