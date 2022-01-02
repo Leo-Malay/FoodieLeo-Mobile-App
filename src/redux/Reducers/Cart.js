@@ -1,5 +1,5 @@
 const CartReducer = (
-  state = {isLoading: false, cart: [], err: undefined, suc: undefined},
+  state = {isLoading: false, cart: undefined, err: undefined, suc: undefined},
   action,
 ) => {
   switch (action.type) {
@@ -13,7 +13,6 @@ const CartReducer = (
         ...state,
         isLoading: false,
         cart: action.data.cart,
-        totalCost: action.data.totalCost,
         suc: 'Added to Cart',
         trial: 0,
       };
@@ -22,8 +21,6 @@ const CartReducer = (
         ...state,
         isLoading: false,
         cart: action.data.cart,
-        totalCost: action.data.totalCost,
-        suc: 'Removed from Cart',
         trial: 0,
       };
 
@@ -32,7 +29,6 @@ const CartReducer = (
         ...state,
         isLoading: false,
         cart: action.data.cart,
-        totalCost: action.data.totalCost,
         trial: 0,
       };
     case 'CART_FETCH_FAILURE':

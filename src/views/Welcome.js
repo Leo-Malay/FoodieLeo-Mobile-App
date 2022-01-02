@@ -1,15 +1,12 @@
 import React from 'react';
-import {StyleSheet, View, Text, ImageBackground} from 'react-native';
+import {View, Text, ImageBackground} from 'react-native';
 import {useSelector} from 'react-redux';
 // Helper Component
-import {Button, IconButton} from '../components/Button';
+import {Button} from '../components/Button';
 import WelcomeImg from '../assets/img/general/Welcome.jpg';
 // Style
 import style from '../Style/style';
 import {Black, White, Yellow} from '../Style/color';
-const Localstyle = StyleSheet.create({
-  Text: {paddingBottom: 20},
-});
 const Welcome = ({navigation}) => {
   const {isAuthenticated} = useSelector(state => state.auth);
   return (

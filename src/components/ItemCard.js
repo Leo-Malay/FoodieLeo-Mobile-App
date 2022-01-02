@@ -3,29 +3,12 @@ import {View, Image, Text} from 'react-native';
 import {useDispatch} from 'react-redux';
 // Helper Component
 import {IconButton} from './Button';
-// Importing Image
-import BEVERAGE from '../assets/img/products/Beverages.jpg';
-import BURGER from '../assets/img/products/Burger.jpg';
-import FRENCHFRIES from '../assets/img/products/FrenchFries.jpg';
-import PIZZA from '../assets/img/products/Pizza.jpg';
-import PASTA from '../assets/img/products/Pasta.jpg';
-import SANDWICH from '../assets/img/products/Sandwich.jpg';
-import SUB from '../assets/img/products/Sub.jpg';
+import getImg from './getImage';
 // Style
 import style from '../Style/style';
 import {Black, Yellow} from '../Style/color';
 const ItemCard = ({navigation, props}) => {
   const dispatch = useDispatch();
-  const getImg = prop => {
-    if (prop == 'BURGER') return BURGER;
-    else if (prop == 'PIZZA') return PIZZA;
-    else if (prop == 'PIZZA') return PASTA;
-    else if (prop == 'BEVERAGE') return BEVERAGE;
-    else if (prop == 'SANDWICH') return SUB;
-    else if (prop == 'FRIED') return FRENCHFRIES;
-    else if (prop == 'SANDWICH') return SANDWICH;
-    else return '';
-  };
   return (
     <View
       style={{

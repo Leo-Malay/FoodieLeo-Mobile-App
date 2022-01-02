@@ -24,8 +24,9 @@ const Home = ({navigation}) => {
   const {menu, isLoading} = useSelector(state => state.menu);
   useEffect(() => {
     if (data?.fname === undefined) dispatch(Account());
-    if (menu === undefined)
+    if (data?.fname !== undefined && menu === undefined) {
       dispatch(Menu(data?.city, data?.state, data?.country));
+    }
   }, [Menu, data, menu]);
   const [search, setSearch] = useState('');
   const HomeStyle = StyleSheet.create({

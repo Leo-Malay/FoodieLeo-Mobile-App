@@ -1,6 +1,6 @@
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import {View, Text} from 'react-native';
-import {useDispatch} from 'react-redux';
+import {useDispatch, useSelector} from 'react-redux';
 // Helper Component
 import {IconButton} from './Button';
 // Style
@@ -9,7 +9,19 @@ import {Red, White, Yellow, Black, Green} from '../Style/color';
 import {RemoveCart, AddCart} from '../redux/Actions/Cart';
 const CartItem = ({props}) => {
   const dispatch = useDispatch();
-  const [qty, setQty] = useState(props.qty);
+  const {cart} = useSelector(state => state.cart);
+  var data;
+  useEffect(() => {
+    data = cart.filter(cart => {
+      return cart.productId === props.productId;
+    })[0];
+    if (data?.qty) setQty(data?.qty);
+    if (data?.productName) setProductName(data?.productName);
+    if (data?.price) setPrice(data?.price);
+  }, [cart, props]);
+  const [qty, setQty] = useState(data?.qty);
+  const [productName, setProductName] = useState(data?.productName);
+  const [price, setPrice] = useState(data?.price);
   const [isEdited, setIsEdited] = useState(false);
   return (
     <View
@@ -29,7 +41,7 @@ const CartItem = ({props}) => {
           paddingLeft: 10,
         }}>
         {'\t'}
-        {props.productName}
+        {productName}
       </Text>
       <View style={{flexDirection: 'row', flexWrap: 'wrap'}}>
         <Text
@@ -40,7 +52,7 @@ const CartItem = ({props}) => {
             paddingLeft: 15,
             flex: 1,
           }}>
-          ${props.price}
+          ${price}
         </Text>
         <View
           style={{
@@ -84,7 +96,7 @@ const CartItem = ({props}) => {
               color: Black,
               pad: 1,
               onPress: () => {
-                if (props.buyQtyLimit > qty) {
+                if (data?.buyQtyLimit > qty) {
                   setQty(qty + 1);
                   setIsEdited(true);
                 }
